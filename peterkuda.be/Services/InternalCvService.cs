@@ -48,63 +48,73 @@ public class InternalCvService : ICvService
             {
                 new ComputerVaardigheid {
                     Omschrijving = "Microsoft Office",
-                    Niveau = "Goed"
+                    Niveau = "Goed",
+                    Category = "Toepassingen"
                 },
                 new ComputerVaardigheid {
                     Omschrijving = "Microsoft Windows",
-                    Niveau = "Goed"
+                    Niveau = "Goed",
+                    Category = "Toepassingen"
                 },
                 new ComputerVaardigheid {
                     Omschrijving = "Bartender Designer",
-                    Niveau = "Goed"
+                    Niveau = "Goed",
+                    Category = "Toepassingen"
                 },
                 new ComputerVaardigheid {
                     Omschrijving = "ABAP",
-                    Niveau = "Basis"
+                    Niveau = "Basis",
+                    Category = "Backend Software ontwikkeling"
                 },
                 new ComputerVaardigheid {
                     Omschrijving = "Adobe LiveCycle Designer",
-                    Niveau = "Basis"
-                },
-                new ComputerVaardigheid {
-                    Omschrijving = "Adobe LiveCycle Designer",
-                    Niveau = "Basis"
+                    Niveau = "Basis",
+                    Category = "Font-end development"
                 },
                 new ComputerVaardigheid {
                     Omschrijving = "Smartforms",
-                    Niveau = "Goed"
+                    Niveau = "Goed",
+                    Category = "Font-end development"
                 },
                 new ComputerVaardigheid {
                     Omschrijving = "VB Script",
-                    Niveau = "Goed"
+                    Niveau = "Goed",
+                    Category = "Backend Software ontwikkeling"
                 },
                 new ComputerVaardigheid {
                     Omschrijving = "Visual Basis voor Applications",
-                    Niveau = "Zeer goed"
+                    Niveau = "Zeer goed",
+                    Category = "Backend Software ontwikkeling"
                 },
                 new ComputerVaardigheid {
                     Omschrijving = "VB.NET",
-                    Niveau = "Goed"
+                    Niveau = "Goed",
+                    Category = "Backend Software ontwikkeling"
                 },
                 new ComputerVaardigheid {
                     Omschrijving = "C#",
-                    Niveau = "Goed"
+                    Niveau = "Goed",
+                    Category = "Backend Software ontwikkeling"
                 },
                 new ComputerVaardigheid {
                     Omschrijving = "HTML",
-                    Niveau = "Goed"
+                    Niveau = "Goed",
+                    Category = "Font-end development"
                 },
                 new ComputerVaardigheid {
                     Omschrijving = "CSS",
-                    Niveau = "Goed"
+                    Niveau = "Goed",
+                    Category = "Font-end development"
                 },
                 new ComputerVaardigheid {
                     Omschrijving = "SQL",
-                    Niveau = "Goed"
+                    Niveau = "Goed",
+                    Category = "Backend Software ontwikkeling"
                 },
                 new ComputerVaardigheid {
                     Omschrijving = "RPG 400",
-                    Niveau = "Zeer goed"
+                    Niveau = "Zeer goed",
+                    Category = "Backend Software ontwikkeling"
                 },
             },
             WerkErvaringen = new List<WerkErvaring>
@@ -154,13 +164,36 @@ public class InternalCvService : ICvService
                 },
                 new WerkErvaring
                 {
+                    Functie = "IT Support Specialist",
+                    Bedrijf = "IDE / Fabriekswinkel",
+                    DatumVan = new DateTime(1997,01,01),
+                    DatumTot = new DateTime(1997,02,28),
+                    Taken = new List<string>
+                    {
+                        "Installatie van software in de verschillende vestigingen"
+                    }
+                },
+                new WerkErvaring
+                {
+                    Functie = "IT Specialist",
+                    Bedrijf = "V.M.W. (De Watergroep)",
+                    DatumVan = new DateTime(1995,12,01),
+                    DatumTot = new DateTime(1996,11,30),
+                    Taken = new List<string>
+                    {
+                        "Software development in Filemaker Pro",
+                        "Installatie en onderhoud computers"
+                    }
+                },
+                new WerkErvaring
+                {
                     Functie = "Software tester",
-                    Bedrijf = "Phiips FT",
+                    Bedrijf = "Philips FT",
                     DatumVan = new DateTime(1995,03,01),
                     DatumTot = new DateTime(1995,06,30),
                     Taken = new List<string>
                     {
-                        "Ondersteuning Verkoop en verdeling, Materiaal beheer en EDI"
+                        "Testen van verschillende soorten toepassen geschreven voor CD-I"
                     }
                 },
             }

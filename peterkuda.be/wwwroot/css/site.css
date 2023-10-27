@@ -16,3 +16,14 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+ul {
+    list-style-type: none;    
+}
+
+/* Bootstrap customization*/
+.navbar-custom {
+    background-color: #ABD7A8;
+    color: whitesmoke;
+    border-color: whitesmoke;
+}
