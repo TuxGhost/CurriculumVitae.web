@@ -4,11 +4,16 @@ using System.Globalization;
 using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 using Microsoft.EntityFrameworkCore;
 using CurriculumVitae.Data;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("Default")));
 builder.Services.AddDbContext<CurriculumVitaeDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("Default"))    
-);
+    options.UseSqlite(builder.Configuration.GetConnectionString("Default")));
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<ApplicationDbContext>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -47,6 +52,7 @@ if (!app.Environment.IsDevelopment())
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();;
 
 app.UseAuthorization();
 
