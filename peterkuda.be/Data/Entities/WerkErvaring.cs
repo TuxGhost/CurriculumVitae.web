@@ -1,9 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CurriculumVitae.Model;
+namespace CurriculumVitae.Data.Entities;
 
 public class WerkErvaring
-{    
+{
+    [Key]
+    public int Id { get; set; }
     public string Functie { get; set; } = null!;
     public string Bedrijf { get; set; } = null!;
     public DateTime DatumVan { get;set; } 

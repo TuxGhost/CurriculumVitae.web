@@ -1,7 +1,9 @@
-﻿namespace CurriculumVitae.Model;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace CurriculumVitae.Model;
 
 public class CvModel
-{
+{        
     public string? Profiel { get; set; }
     public List<string> Lijnen { get; set; }  = new List<string>();
     public List<TaalModel> Talen { get; set; } = new List<TaalModel>();

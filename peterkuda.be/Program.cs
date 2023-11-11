@@ -1,9 +1,14 @@
 using Microsoft.AspNetCore.HttpOverrides;
 using CurriculumVitae.Services;
 using System.Globalization;
-
+using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
+using Microsoft.EntityFrameworkCore;
+using CurriculumVitae.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<CurriculumVitaeDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("Default"))    
+);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
