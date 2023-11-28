@@ -27,3 +27,25 @@ ul {
     color: whitesmoke;
     border-color: whitesmoke;
 }
+
+a#loginlink {
+       color: black; 
+       text-decoration: none;
+}
+    a#loginlink:link {
+        color: black;
+        text-decoration: none;
+    }
+    a#loginlink:visited {
+        color: black;
+        text-decoration: none;
+    }
+    a#loginlink:hover {
+        color: black;
+        text-decoration: none;
+    }
+    a#loginlink:active {
+        color: black;
+        text-decoration: none;
+
+    }
