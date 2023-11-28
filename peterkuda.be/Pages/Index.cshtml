@@ -5,55 +5,66 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welkom</h1>    
+    <h1 class="display-4">Welkom</h1>
 </div>
-<h1>@Model.cv.Profiel</h1>
-@foreach(var lijn in Model.cv.Lijnen){
-    <p>@lijn</p>
-}
-<h1>Talen</h1>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Taal</th>
-            <th>Lezen</th>            
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(var taal in Model.cv.Talen){
+@if (Model != null && Model.cv != null) 
+{
+    <h1>@Model.cv.Profiel</h1>
+    @foreach (var lijn in Model.cv.Lijnen)
+    {
+        <p>@lijn</p>
+    }
+    <h1>Talen</h1>
+    <table class="table">
+        <thead>
             <tr>
-                <td>@taal.Taal</td>
-                <td>@taal.Niveau</td>            
+                <th>Taal</th>
+                <th>Lezen</th>
             </tr>
-        }      
-    </tbody>
-    
-</table>
+        </thead>
+        <tbody>
+            @foreach (var taal in Model.cv.Talen)
+            {
+                <tr>
+                    <td>@taal.Taal</td>
+                    <td>@taal.Niveau</td>
+                </tr>
+            }
+        </tbody>
 
-<h1>Vaardigheden</h1>
-<ul>
-    @foreach(var vaardigheid in Model.cv.PersoonlijkeVaardigheden){
-        <li>@vaardigheid</li>
-    }    
-</ul>
-<h1>Computervaardigheden</h1>
-<table class="table">
-    <tbody>
-        @foreach(var vaardigheid in Model.cv.ComputerVaardigheden){
-            <tr>
-                <td>@vaardigheid.Omschrijving</td>
-                <td>@vaardigheid.Niveau</td>
-            </tr>
-        }       
-    </tbody>
-</table>
-<h1>Werkervaring</h1>
-@foreach(var werkervaring in Model.cv.WerkErvaringen){
-    <h5>@werkervaring.Functie - @werkervaring.Bedrijf @werkervaring.DatumVan.ToString("MM/yyyy") - @werkervaring.DatumTot.ToString("MM/yyyy") 
-    </h5>
+    </table>
+
+    <h1>Vaardigheden</h1>
     <ul>
-        @foreach(var taak in werkervaring.Taken){
-            <li>@taak</li>
+        @foreach (var vaardigheid in Model.cv.PersoonlijkeVaardigheden)
+        {
+            <li>@vaardigheid</li>
         }
     </ul>
+    <h1>Computervaardigheden</h1>
+    <table class="table">
+        <tbody>
+            @foreach (var vaardigheid in Model.cv.ComputerVaardigheden)
+            {
+                <tr>
+                    <td>@vaardigheid.Omschrijving</td>
+                    <td>@vaardigheid.Niveau</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <h1>Werkervaring</h1>
+    @foreach (var werkervaring in Model.cv.WerkErvaringen)
+    {
+        <h5>
+            @werkervaring.Functie - @werkervaring.Bedrijf @werkervaring.DatumVan.ToString("MM/yyyy") - @werkervaring.DatumTot.ToString("MM/yyyy")
+        </h5>
+        <ul>
+            @foreach (var taak in werkervaring.Taken)
+            {
+                <li>@taak</li>
+            }
+        </ul>
+    }
+
 }

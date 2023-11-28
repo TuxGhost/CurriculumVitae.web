@@ -21,6 +21,7 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
     options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
 ); // For use behind a reverse proxy server
 builder.Services.AddTransient<ICvService, InternalCvService>();
+//builder.Services.AddTransient<ICvService,SQLiteCvService>();
 
 //Translations
 builder.Services.Configure<RequestLocalizationOptions>(options =>

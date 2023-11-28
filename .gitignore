@@ -363,3 +363,5 @@ MigrationBackup/
 FodyWeavers.xsd
 /peterkuda.be/cv.db
 /peterkuda.be/appsettings.json
+/peterkuda.be/cv.db-shm
+/peterkuda.be/cv.db-wal
