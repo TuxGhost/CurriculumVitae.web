@@ -22,8 +22,14 @@ builder.Services.AddRazorPages();
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
     options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
 ); // For use behind a reverse proxy server
-builder.Services.AddTransient<ICvService, InternalCvService>();
-//builder.Services.AddTransient<ICvService,SQLiteCvService>();
+// determin if static or database service should be used.
+bool? databaseService = builder.Configuration.GetValue<bool>("DatabaseService");
+if (databaseService == true)
+{
+    builder.Services.AddTransient<ICvService, SQLiteCvService>();
+} else
+    builder.Services.AddTransient<ICvService, InternalCvService>();
+
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 //Translations
 builder.Services.Configure<RequestLocalizationOptions>(options =>
