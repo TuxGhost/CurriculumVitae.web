@@ -2,6 +2,7 @@
 using CurriculumVitae.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.ComponentModel.DataAnnotations;
 
 namespace peterkuda.be.Pages
 {
@@ -10,6 +11,7 @@ namespace peterkuda.be.Pages
         private readonly ILogger<IndexModel> _logger;
         private readonly ICvService cvService;
         public CvModel cv { get; private set; } = null!;
+        public bool Editable { get; set; } = false;
 
         public IndexModel(ILogger<IndexModel> logger,ICvService cvService)  
         {
@@ -22,5 +24,14 @@ namespace peterkuda.be.Pages
         {
             cv = this.cv;
         }
+        public void OnPost()
+        {
+            
+        }
+        public void OnPostEdit()
+        {
+            Editable = true;
+        }
+       
     }
 }
