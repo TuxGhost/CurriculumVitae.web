@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 using Microsoft.EntityFrameworkCore;
 using CurriculumVitae.Data;
 using Microsoft.AspNetCore.Identity;
+using System.Net.Mail;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -22,7 +24,7 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
 ); // For use behind a reverse proxy server
 builder.Services.AddTransient<ICvService, InternalCvService>();
 //builder.Services.AddTransient<ICvService,SQLiteCvService>();
-
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 //Translations
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
