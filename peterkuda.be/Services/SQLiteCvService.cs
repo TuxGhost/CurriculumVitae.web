@@ -24,6 +24,29 @@ public class SQLiteCvService : ICvService
             {
                 cvModels.Profiel = profiel.Beschrijving;
             }
+            foreach(var taal in dbContext.Talen)
+            {
+                cvModels.Talen.Add(new Model.TaalModel { Taal = taal.Taal , Niveau = taal.Niveau });
+            }
+            foreach(var computervaardigheid in dbContext.computerVaardigheiden)
+            {
+                cvModels.ComputerVaardigheden.Add(new Model.ComputerVaardigheid
+                {
+                    Category = computervaardigheid.Category,
+                    Niveau = computervaardigheid.Niveau,
+                    Omschrijving = computervaardigheid.Omschrijving
+                });
+            }
+            foreach(var werkervaring in dbContext.WerkErvaringen)
+            {
+                cvModels.WerkErvaringen.Add(new Model.WerkErvaring
+                {
+                     Bedrijf = werkervaring.Bedrijf,
+                     DatumVan = werkervaring.DatumVan,
+                     DatumTot = werkervaring.DatumTot,
+                     Functie = werkervaring.Functie,                     
+                });
+            }
         }
         return cvModels;
     }
@@ -46,5 +69,22 @@ public class SQLiteCvService : ICvService
             }
             _ = dbContext.SaveChanges();
         }        
+    }
+    public void AddLanguage(Data.Entities.TaalModel taal) 
+    {
+        dbContext.Talen.Add(taal);
+        dbContext.SaveChanges();
+    }
+
+    public void AddWorkExperience(Data.Entities.WerkErvaring werkervaring)
+    {
+        dbContext.WerkErvaringen.Add(werkervaring);
+        dbContext.SaveChanges();
+    }
+
+    public void AddComputerServices(Data.Entities.ComputerVaardigheid computerVaardigheid)
+    {
+        dbContext.computerVaardigheiden.Add(computerVaardigheid); 
+        dbContext.SaveChanges();
     }
 }

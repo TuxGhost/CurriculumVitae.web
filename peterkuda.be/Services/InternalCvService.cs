@@ -200,6 +200,21 @@ public class InternalCvService : ICvService
         };
     }
 
+    public void AddComputerServices(Data.Entities.ComputerVaardigheid computerVaardigheid)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void AddLanguage(Data.Entities.TaalModel taal)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void AddWorkExperience(Data.Entities.WerkErvaring werkervaring)
+    {
+        throw new NotImplementedException();
+    }
+
     public CvModel GetCv()
     {
         return cvModels;
