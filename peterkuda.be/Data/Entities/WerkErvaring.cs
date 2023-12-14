@@ -10,6 +10,6 @@ public class WerkErvaring
     public string Bedrijf { get; set; } = null!;
     public DateTime DatumVan { get;set; } 
     public DateTime DatumTot { get; set; }
-    public List<string> Taken { get; set; } = null!; 
+    public List<Taak> Taken { get; set; } = null!; 
 
 }
