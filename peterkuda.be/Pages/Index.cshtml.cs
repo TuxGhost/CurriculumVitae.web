@@ -31,7 +31,6 @@ namespace peterkuda.be.Pages
         public void OnPostEdit()
         {
             Editable = true;
-        }
-       
+        }               
     }
 }

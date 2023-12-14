@@ -77,10 +77,15 @@
         }
     }
     else
-    {
+    {        
         <h1>Profiel</h1>
+        <form method="post">
+            <label asp-for="@Model.cv.Profiel">Profiel tekst</label>
+            @*<input type="text" id="profiel" asp-for="@Model.cv.Profiel" value="@Model.cv.Profiel" />*@
+            <textarea id="profiel" asp-for="@Model.cv.Profiel"></textarea>
+        </form>
         @foreach (var lijn in Model.cv.Lijnen)
-        {
+        {                       
             <p>@lijn</p>
         }
         <h1>Talen</h1>
