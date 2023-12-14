@@ -3,6 +3,7 @@ using System;
 using CurriculumVitae.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CurriculumVitae.Data.Migrations
 {
     [DbContext(typeof(CurriculumVitaeDbContext))]
-    partial class CurriculumVitaeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231214114259_werkervaring en profile en taken")]
+    partial class werkervaringenprofileentaken
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.24");
