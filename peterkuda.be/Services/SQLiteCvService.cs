@@ -1,5 +1,7 @@
 ﻿using CurriculumVitae.Data;
+using CurriculumVitae.Data.Entities;
 using CurriculumVitae.Model;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace CurriculumVitae.Services;
@@ -17,12 +19,32 @@ public class SQLiteCvService : ICvService
         if(cvModels == null)
         {
             cvModels = new CvModel();
+            Profiel? profiel = dbContext.Profielen.FirstOrDefault();
+            if(profiel != null)
+            {
+                cvModels.Profiel = profiel.Beschrijving;
+            }
         }
         return cvModels;
     }
 
     public void SetProfiel(string profiel)
     {
-        throw new NotImplementedException();
+        if(profiel  != null)
+        {
+            Profiel? profielObject = dbContext.Profielen.FirstOrDefault();
+            if (profielObject == null)
+            {
+                profielObject = new Profiel();
+                profielObject.Beschrijving = profiel;
+                _ = dbContext.Profielen.Add(profielObject);
+            }
+            else
+            {
+                profielObject.Beschrijving = profiel;
+                _ = dbContext.Profielen.Update(profielObject);
+            }
+            _ = dbContext.SaveChanges();
+        }        
     }
 }

@@ -18,7 +18,7 @@
 {
     @if (Model.Editable == false)
     {
-        <h1>@Model.cv.Profiel</h1>
+        <div><p>@Model.cv.Profiel</p></div>
         @foreach (var lijn in Model.cv.Lijnen)
         {
             <p>@lijn</p>
