@@ -45,6 +45,9 @@ public class IndexModel : PageModel
     }               
     public void OnPostProfiel(CvModel cv)
     {
-        
+        if (cv != null)
+        {
+            cvService.SetProfiel(cv.Profiel!);
+        }        
     }
 }
