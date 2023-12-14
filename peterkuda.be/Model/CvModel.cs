@@ -3,7 +3,7 @@
 namespace CurriculumVitae.Model;
 
 public class CvModel
-{   protected bool Editable {get; set; } = false;     
+{   public bool Editable {get; set; } = false;     
     public string? Profiel { get; set; }
     public List<string> Lijnen { get; set; }  = new List<string>();
     public List<TaalModel> Talen { get; set; } = new List<TaalModel>();

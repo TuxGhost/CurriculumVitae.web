@@ -204,4 +204,9 @@ public class InternalCvService : ICvService
     {
         return cvModels;
     }
+
+    public void SetProfiel(string profiel)
+    {
+        throw new NotImplementedException();
+    }
 }
