@@ -19,5 +19,10 @@ public class SQLiteCvService : ICvService
             cvModels = new CvModel();
         }
         return cvModels;
-    }    
+    }
+
+    public void SetProfiel(string profiel)
+    {
+        throw new NotImplementedException();
+    }
 }

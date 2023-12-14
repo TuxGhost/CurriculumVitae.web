@@ -26,7 +26,8 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
 bool? databaseService = builder.Configuration.GetValue<bool>("DatabaseService");
 if (databaseService == true)
 {
-    builder.Services.AddTransient<ICvService, SQLiteCvService>();
+    //builder.Services.AddTransient<ICvService, SQLiteCvService>();
+    builder.Services.AddScoped<ICvService,SQLiteCvService>();
 } else
     builder.Services.AddTransient<ICvService, InternalCvService>();
 
