@@ -9,5 +9,11 @@ public interface ICvService
     public void SetProfiel(string  profiel);
     public void AddLanguage(Data.Entities.TaalModel taal);
     public void AddWorkExperience(Data.Entities.WerkErvaring werkervaring);
+    public void AddWorkExperienceTask(int id, string taak);
     public void AddComputerServices(Data.Entities.ComputerVaardigheid computerVaardigheid);
+    public void DeleteLanguage(int id);
+    public void DeleteWorkExpercience(int id);
+    public void DeleteWorkExperienceTask(int workexperienceId, string taak);
+    public void DeleteComputerServices(int id);
+
 }

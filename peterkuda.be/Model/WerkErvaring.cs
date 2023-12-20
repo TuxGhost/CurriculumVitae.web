@@ -4,6 +4,7 @@ namespace CurriculumVitae.Model;
 
 public class WerkErvaring
 {    
+    public int Id { get; set; }
     public string Functie { get; set; } = null!;
     public string Bedrijf { get; set; } = null!;
     public DateTime DatumVan { get;set; } 

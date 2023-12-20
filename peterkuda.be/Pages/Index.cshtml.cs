@@ -16,6 +16,8 @@ public class IndexModel : PageModel
     public TaalModel Taal { get; private set; } = null!;
     [BindProperty]
     public ComputerVaardigheid ComputerVaardigheid { get; private set; } = null!;
+    [BindProperty]
+    public WerkErvaring WerkErvaring { get; private set; } = null!;
     public bool Editable { get; set; } = false;
 
     public IndexModel(ILogger<IndexModel> logger, ICvService cvService)
@@ -70,5 +72,27 @@ public class IndexModel : PageModel
             Niveau = computervaardigheid.Niveau,
             Omschrijving = computervaardigheid.Omschrijving
         });
+    }
+    public void OnPostAddWorkExperience(WerkErvaring werkervaring)
+    {
+        cvService.AddWorkExperience(new CurriculumVitae.Data.Entities.WerkErvaring
+        {
+             Bedrijf = werkervaring.Bedrijf,
+             Functie = werkervaring.Functie,
+             DatumVan = werkervaring.DatumVan,
+             DatumTot = werkervaring.DatumTot             
+        });
+    }
+    public void OnPostAddWorkExperienceTask(int id,string taak)
+    {
+        cvService.AddWorkExperienceTask(id, taak);
+    }
+    public void OnPostDeleteWorkExperience(int id)
+    {
+        cvService.DeleteWorkExpercience(id);
+    }
+    public void OnPostDeleteWorkExperienceTask(int workexperienceId, string taak)
+    {
+        cvService.DeleteWorkExperienceTask(workexperienceId, taak);
     }
 }

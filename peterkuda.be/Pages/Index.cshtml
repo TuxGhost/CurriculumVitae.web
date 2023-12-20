@@ -68,12 +68,15 @@
             <h5>
                 @werkervaring.Functie - @werkervaring.Bedrijf @werkervaring.DatumVan.ToString("MM/yyyy") - @werkervaring.DatumTot.ToString("MM/yyyy")
             </h5>
-            <ul>
-                @foreach (var taak in werkervaring.Taken)
-                {
-                    <li>@taak</li>
-                }
-            </ul>
+            @if (werkervaring.Taken != null)
+            {
+                <ul>
+                    @foreach (var taak in werkervaring.Taken)
+                    {
+                        <li>@taak</li>
+                    }
+                </ul>
+            }
         }
     }
     else
@@ -149,24 +152,49 @@
                 </tfooter>
             </table>
         </form>
-        <form method="post" asp-page-handler="AddWorkExperience">
-            <h1>Werkervaring</h1>
-            @foreach (var werkervaring in Model.cv.WerkErvaringen)
-            {
-                <h5>
+
+        <h1>Werkervaring</h1>
+        @foreach (var werkervaring in Model.cv.WerkErvaringen)
+        {
+            <h5>
+                <form method="post" asp-page-handler="DeleteWorkExperience">
                     @werkervaring.Functie - @werkervaring.Bedrijf @werkervaring.DatumVan.ToString("MM/yyyy") - @werkervaring.DatumTot.ToString("MM/yyyy")
-                </h5>
+                    <input id="id" type="hidden" name="id" value="@werkervaring.Id" />
+                    <li><button type="submit">Verwijderen</button></li>
+                </form>
+            </h5>
+            @if (werkervaring.Taken != null)
+            {
                 <ul>
                     @foreach (var taak in werkervaring.Taken)
                     {
                         <li>@taak</li>
+                        <li>
+                            <form asp-page-handler="DeleteWorkExperienceTask" method="post">
+                                <input name="taak" type="hidden" value="@taak"/>
+                                <input name="workexperienceId" type="hidden" value="@werkervaring.Id" />
+                                <button type="submit">-</button>
+                            </form>                            
+                        </li>
                     }
                 </ul>
             }
+            <form asp-page-handler="AddWorkExperienceTask" method="post">
+                <input id="workexperienceTaskId" type="hidden" name="id" value="@werkervaring.Id" />
+                <label>Taak<input name="taak" type="text" /></label>
+                <button type="submit">Toevoegen</button>
+            </form>
+        }
+        <form method="post" asp-page-handler="AddWorkExperience">
+            <div>
+                <label for="bedrijf"><input id="werkervaringbedrijf" type="text" asp-for="WerkErvaring.Bedrijf" /></label>
+                <label for="functie"><input id="werkervaringfunctie" type="text" asp-for="WerkErvaring.Functie" />Functie:</label>
+                <label for="datumvan"><input id="werkervaringdatumvan" type="date" asp-for="WerkErvaring.DatumVan" />Van:</label>
+                <label for="datumtot"><input id="werkervaringdatumtot" type="date" asp-for="WerkErvaring.DatumTot" />Tot:</label>
+                <button type="submit">Toevoegen werkervaring</button>
+            </div>
         </form>
     }
-
-
 }
 <script>
     function Edit() {

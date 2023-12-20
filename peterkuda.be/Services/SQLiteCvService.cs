@@ -1,5 +1,6 @@
 ﻿using CurriculumVitae.Data;
 using CurriculumVitae.Data.Entities;
+using CurriculumVitae.Data.Migrations;
 using CurriculumVitae.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -15,20 +16,20 @@ public class SQLiteCvService : ICvService
         this.dbContext = dbContext;
     }
     public CvModel GetCv()
-    {        
-        if(cvModels == null)
+    {
+        if (cvModels == null)
         {
             cvModels = new CvModel();
             Profiel? profiel = dbContext.Profielen.FirstOrDefault();
-            if(profiel != null)
+            if (profiel != null)
             {
                 cvModels.Profiel = profiel.Beschrijving;
             }
-            foreach(var taal in dbContext.Talen)
+            foreach (var taal in dbContext.Talen)
             {
-                cvModels.Talen.Add(new Model.TaalModel { Taal = taal.Taal , Niveau = taal.Niveau });
+                cvModels.Talen.Add(new Model.TaalModel { Taal = taal.Taal, Niveau = taal.Niveau });
             }
-            foreach(var computervaardigheid in dbContext.computerVaardigheiden)
+            foreach (var computervaardigheid in dbContext.computerVaardigheiden)
             {
                 cvModels.ComputerVaardigheden.Add(new Model.ComputerVaardigheid
                 {
@@ -37,23 +38,37 @@ public class SQLiteCvService : ICvService
                     Omschrijving = computervaardigheid.Omschrijving
                 });
             }
-            foreach(var werkervaring in dbContext.WerkErvaringen)
+            foreach (var werkervaring in dbContext.WerkErvaringen.Include(t => t.Taken))
             {
+                List<string> taken = new();
+                if (werkervaring.Taken != null)
+                {
+                    foreach (var taak in werkervaring.Taken)
+                    {
+                        taken.Add(taak.Bechrijving);
+                    }
+                }
                 cvModels.WerkErvaringen.Add(new Model.WerkErvaring
                 {
-                     Bedrijf = werkervaring.Bedrijf,
-                     DatumVan = werkervaring.DatumVan,
-                     DatumTot = werkervaring.DatumTot,
-                     Functie = werkervaring.Functie,                     
+                    Id = werkervaring.Id,
+                    Bedrijf = werkervaring.Bedrijf,
+                    DatumVan = werkervaring.DatumVan,
+                    DatumTot = werkervaring.DatumTot,
+                    Functie = werkervaring.Functie,
+                    Taken = taken
                 });
             }
         }
+        cvModels.PersoonlijkeVaardigheden.Add("Analytisch");
+        cvModels.PersoonlijkeVaardigheden.Add("Klantgerichtheid");
+        cvModels.PersoonlijkeVaardigheden.Add("Leervermogen");
+        cvModels.PersoonlijkeVaardigheden.Add("Onafhankelijk");
         return cvModels;
     }
 
     public void SetProfiel(string profiel)
     {
-        if(profiel  != null)
+        if (profiel != null)
         {
             Profiel? profielObject = dbContext.Profielen.FirstOrDefault();
             if (profielObject == null)
@@ -68,9 +83,9 @@ public class SQLiteCvService : ICvService
                 _ = dbContext.Profielen.Update(profielObject);
             }
             _ = dbContext.SaveChanges();
-        }        
+        }
     }
-    public void AddLanguage(Data.Entities.TaalModel taal) 
+    public void AddLanguage(Data.Entities.TaalModel taal)
     {
         dbContext.Talen.Add(taal);
         dbContext.SaveChanges();
@@ -84,7 +99,69 @@ public class SQLiteCvService : ICvService
 
     public void AddComputerServices(Data.Entities.ComputerVaardigheid computerVaardigheid)
     {
-        dbContext.computerVaardigheiden.Add(computerVaardigheid); 
+        dbContext.computerVaardigheiden.Add(computerVaardigheid);
         dbContext.SaveChanges();
     }
+
+    public void DeleteLanguage(int id)
+    {
+        var language = dbContext.Talen.Find(id);
+        if (language != null)
+        {
+            dbContext.Talen.Remove(language);
+            dbContext.SaveChanges();
+        }
+    }
+
+    public void DeleteWorkExpercience(int id)
+    {
+        var workexperience = dbContext.WerkErvaringen.Find(id);
+        if (workexperience != null)
+        {
+            dbContext.WerkErvaringen.Remove(workexperience);
+            dbContext.SaveChanges();
+        }
+    }
+
+    public void DeleteComputerServices(int id)
+    {
+        var computerServices = dbContext.computerVaardigheiden.Find(id);
+        if (computerServices != null)
+        {
+            dbContext.computerVaardigheiden.Remove(computerServices);
+            dbContext.SaveChanges();
+        }
+    }
+
+    public void AddWorkExperienceTask(int id, string taak)
+    {
+        var workexperience = dbContext.WerkErvaringen.Find(id);
+        if (workexperience != null)
+        {
+            if (workexperience.Taken == null)
+            {
+                workexperience.Taken = new List<Taak>();
+            }
+            workexperience.Taken.Add(new Taak
+            {
+                Bechrijving = taak
+            });
+            dbContext.SaveChanges();
+        }        
+    }
+
+    public void DeleteWorkExperienceTask(int workexperienceId, string taak)
+    {
+        var workexperience = dbContext.WerkErvaringen.Find(workexperienceId);
+        if(workexperience != null)
+        {
+            var task = workexperience.Taken.Find(f => f.Bechrijving == taak);
+            if(task != null)
+            {
+                workexperience.Taken.Remove(task);
+                dbContext.SaveChanges();
+            }            
+        }
+    }
 }
+

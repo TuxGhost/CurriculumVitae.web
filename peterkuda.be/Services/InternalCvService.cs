@@ -214,6 +214,30 @@ public class InternalCvService : ICvService
     {
         throw new NotImplementedException();
     }
+    public void AddWorkExperienceTask(int id, string taak)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void DeleteComputerServices(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void DeleteLanguage(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void DeleteWorkExpercience(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void DeleteWorkExperienceTask(int workexperienceId, string taak)
+    {
+        throw new NotImplementedException();
+    }
 
     public CvModel GetCv()
     {
