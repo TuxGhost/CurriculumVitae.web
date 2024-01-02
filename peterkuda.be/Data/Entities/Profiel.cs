@@ -7,5 +7,5 @@ public class Profiel
     [Key]
     public uint Id { get; set; }
     [Required]
-    public string Beschrijving { get; set; } = null!;
+    public required string Beschrijving { get; set; } = null!;
 }

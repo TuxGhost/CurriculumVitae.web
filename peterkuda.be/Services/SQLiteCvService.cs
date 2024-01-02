@@ -73,8 +73,7 @@ public class SQLiteCvService : ICvService
             Profiel? profielObject = dbContext.Profielen.FirstOrDefault();
             if (profielObject == null)
             {
-                profielObject = new Profiel();
-                profielObject.Beschrijving = profiel;
+                profielObject = new Profiel { Beschrijving = profiel };                
                 _ = dbContext.Profielen.Add(profielObject);
             }
             else

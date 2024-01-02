@@ -6,5 +6,5 @@ public class Taak
 {
     public uint Id { get; set; }
     [Required]
-    public string Bechrijving { get; set; } = null!;
+    public required string Bechrijving { get; set; } = null!;
 }
