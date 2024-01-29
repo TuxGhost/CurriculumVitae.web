@@ -12,7 +12,7 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <input id="editable" value="false" type="hidden" />
-    <form method="post" asp-page-handler="edit"><button id="edit" asp-page-handler="Edit">Edit</button></form>
+    <form method="post" asp-page-handler="edit"><button id="edit" asp-page-handler="Edit" class="btn btn-outline-primary">Edit</button></form>
 }
 @if (Model != null && Model.cv != null)
 {
@@ -27,8 +27,8 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Taal</th>
-                    <th>Lezen</th>
+                    <th scope="col">Taal</th>
+                    <th scope="col">Lezen</th>
                 </tr>
             </thead>
             <tbody>
@@ -86,7 +86,7 @@
             <label for="profiel" asp-for="cv.Profiel">Profiel tekst</label>
             @*<input type="text" id="profiel" asp-for="@Model.cv.Profiel" value="@Model.cv.Profiel" />*@
             <textarea id="profiel" asp-for="cv.Profiel"></textarea>
-            <button type="submit">Bewaar profiel</button>
+            <button type="submit" class="btn btn-outline-primary">Bewaar profiel</button>
         </form>
         @foreach (var lijn in Model.cv.Lijnen)
         {
@@ -97,8 +97,8 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Taal</th>
-                        <th>Lezen</th>
+                        <th scope="col">Taal</th>
+                        <th scope="col">Lezen</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -116,7 +116,7 @@
                 </tbody>
                 <tfooter>
 
-                    <button type="submit">Nieuwe taal</button>
+                    <button type="submit" class="btn btn-outline-primary">Nieuwe taal</button>
                 </tfooter>
             </table>
         </form>
@@ -129,7 +129,7 @@
                 }
                 <td><intput type="text" id="vaardigheid" hidden /></td>
             </ul>
-            <button type="submit" hidden>Vaardigheid toevoegen</button>
+            <button type="submit" class="btn btn-outline-primary" hidden>Vaardigheid toevoegen</button>
         </form>
         <form method="post" asp-page-handler="Addcomputerskill">
             <h1>Computervaardigheden</h1>
@@ -148,7 +148,7 @@
                     </tr>
                 </tbody>
                 <tfooter>
-                    <button type="submit">Nieuwe computervaardigheid</button>
+                    <button type="submit" class="btn btn-outline-primary">Nieuwe computervaardigheid</button>
                 </tfooter>
             </table>
         </form>
@@ -160,7 +160,7 @@
                 <form method="post" asp-page-handler="DeleteWorkExperience">
                     @werkervaring.Functie - @werkervaring.Bedrijf @werkervaring.DatumVan.ToString("MM/yyyy") - @werkervaring.DatumTot.ToString("MM/yyyy")
                     <input id="id" type="hidden" name="id" value="@werkervaring.Id" />
-                    <li><button type="submit">Verwijderen</button></li>
+                    <li><button type="submit" class="btn btn-outline-primary">Verwijderen</button></li>
                 </form>
             </h5>
             @if (werkervaring.Taken != null)
@@ -173,7 +173,7 @@
                             <form asp-page-handler="DeleteWorkExperienceTask" method="post">
                                 <input name="taak" type="hidden" value="@taak"/>
                                 <input name="workexperienceId" type="hidden" value="@werkervaring.Id" />
-                                <button type="submit">-</button>
+                                <button type="submit" class="btn btn-outline-primary">-</button>
                             </form>                            
                         </li>
                     }
@@ -182,7 +182,7 @@
             <form asp-page-handler="AddWorkExperienceTask" method="post">
                 <input id="workexperienceTaskId" type="hidden" name="id" value="@werkervaring.Id" />
                 <label>Taak<input name="taak" type="text" /></label>
-                <button type="submit">Toevoegen</button>
+                <button type="submit" class="btn btn-outline-primary">Toevoegen</button>
             </form>
         }
         <form method="post" asp-page-handler="AddWorkExperience">
@@ -191,7 +191,7 @@
                 <label for="functie"><input id="werkervaringfunctie" type="text" asp-for="WerkErvaring.Functie" />Functie:</label>
                 <label for="datumvan"><input id="werkervaringdatumvan" type="date" asp-for="WerkErvaring.DatumVan" />Van:</label>
                 <label for="datumtot"><input id="werkervaringdatumtot" type="date" asp-for="WerkErvaring.DatumTot" />Tot:</label>
-                <button type="submit">Toevoegen werkervaring</button>
+                <button type="submit" class="btn btn-outline-primary">Toevoegen werkervaring</button>
             </div>
         </form>
     }
