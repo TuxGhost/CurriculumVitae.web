@@ -3,7 +3,7 @@
 module.exports = {
     entry: './src/js/index.js', // Replace with your entry file
     output: {
-        filename: 'bundle.js',
+        filename: 'bootstrap-cv.js',
         path: path.resolve(__dirname, 'wwwroot','dist'), // Replace with your output directory
         
     },   
