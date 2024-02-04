@@ -9,5 +9,4 @@ public class ComputerVaardigheid
     public required string Omschrijving { get; set; } = null!;
     public required string Niveau { get; set; } = null!; 
     public required string Category { get; set; } = null!;
-    public bool Enabled { get; set; } = false;
 }

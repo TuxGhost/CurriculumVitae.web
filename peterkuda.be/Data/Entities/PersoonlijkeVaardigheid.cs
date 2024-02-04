@@ -8,6 +8,4 @@ public class PersoonlijkeVaardigheid
     public uint Id { get; set; }
     [Required]
     public string Name { get; set; }
-    [Required]
-    public bool Enabled { get; set; } = false;
 }

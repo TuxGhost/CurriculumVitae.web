@@ -11,5 +11,5 @@ public class WerkErvaring
     public required DateTime DatumVan { get;set; } 
     public required DateTime DatumTot { get; set; }
     public List<Taak> Taken { get; set; } = null!; 
-    public bool Active { get; set; } = false;
+
 }

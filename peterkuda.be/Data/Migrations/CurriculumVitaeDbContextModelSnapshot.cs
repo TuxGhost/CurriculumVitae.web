@@ -15,7 +15,7 @@ namespace CurriculumVitae.Data.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "7.0.0");
+            modelBuilder.HasAnnotation("ProductVersion", "6.0.24");
 
             modelBuilder.Entity("CurriculumVitae.Data.Entities.ComputerVaardigheid", b =>
                 {
@@ -26,9 +26,6 @@ namespace CurriculumVitae.Data.Migrations
                     b.Property<string>("Category")
                         .IsRequired()
                         .HasColumnType("TEXT");
-
-                    b.Property<bool>("Enabled")
-                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Niveau")
                         .IsRequired()
@@ -43,24 +40,6 @@ namespace CurriculumVitae.Data.Migrations
                     b.ToTable("computerVaardigheiden");
                 });
 
-            modelBuilder.Entity("CurriculumVitae.Data.Entities.PersoonlijkeVaardigheid", b =>
-                {
-                    b.Property<uint>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("Enabled")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PersoonlijkeVaardigheiden");
-                });
-
             modelBuilder.Entity("CurriculumVitae.Data.Entities.Profiel", b =>
                 {
                     b.Property<uint>("Id")
@@ -70,9 +49,6 @@ namespace CurriculumVitae.Data.Migrations
                     b.Property<string>("Beschrijving")
                         .IsRequired()
                         .HasColumnType("TEXT");
-
-                    b.Property<bool>("Enabled")
-                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -89,9 +65,6 @@ namespace CurriculumVitae.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("Enabled")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int?>("WerkErvaringId")
                         .HasColumnType("INTEGER");
 
@@ -106,9 +79,6 @@ namespace CurriculumVitae.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("Enabled")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Niveau")
@@ -128,9 +98,6 @@ namespace CurriculumVitae.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("Active")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Bedrijf")
