@@ -8,4 +8,5 @@ public class Profiel
     public uint Id { get; set; }
     [Required]
     public required string Beschrijving { get; set; } = null!;
+    public bool Enabled { get; set; } = true;
 }

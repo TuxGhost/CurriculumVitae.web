@@ -7,4 +7,5 @@ public class Taak
     public uint Id { get; set; }
     [Required]
     public required string Bechrijving { get; set; } = null!;
+    public bool Enabled { get; set; } = true;
 }

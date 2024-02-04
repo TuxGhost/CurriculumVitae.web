@@ -10,6 +10,7 @@ public class WerkErvaring
     public required string Bedrijf { get; set; } = null!;
     public required DateTime DatumVan { get;set; } 
     public required DateTime DatumTot { get; set; }
-    public List<Taak> Taken { get; set; } = null!; 
+    public List<Taak> Taken { get; set; } = null!;
+    public bool Enabled { get; set; } = true;
 
 }
