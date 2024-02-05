@@ -9,9 +9,10 @@
 <div class="text-center">
     <h1 class="display-4">Welkom</h1>
 </div>
+<input id="editable" value="false" type="hidden" asp-for="Editable" />
 @if (SignInManager.IsSignedIn(User))
 {
-    <input id="editable" value="false" type="hidden" />
+    
     <form method="post" asp-page-handler="edit"><button id="edit" asp-page-handler="Edit" class="btn btn-outline-primary">Edit</button></form>
 }
 @if (Model != null && Model.cv != null)
@@ -86,6 +87,7 @@
             <label for="profiel" asp-for="cv.Profiel">Profiel tekst</label>
             @*<input type="text" id="profiel" asp-for="@Model.cv.Profiel" value="@Model.cv.Profiel" />*@
             <textarea id="profiel" asp-for="cv.Profiel"></textarea>
+            <span asp-validation-for="cv.Profiel" class="danger"></span>
             <button type="submit" class="btn btn-outline-primary">Bewaar profiel</button>
         </form>
         @foreach (var lijn in Model.cv.Lijnen)
@@ -115,7 +117,9 @@
                     </tr>
                 </tbody>
                 <tfooter>
-
+                    <span asp-validation-for="Taal.Taal"></span>
+                    <span asp-validation-for="Taal.Niveau"></span>
+                    <input type="checkbox" asp-for="Editable" hidden />
                     <button type="submit" class="btn btn-outline-primary">Nieuwe taal</button>
                 </tfooter>
             </table>
@@ -129,6 +133,7 @@
                 }
                 <td><intput type="text" id="vaardigheid" hidden /></td>
             </ul>
+            <input type="checkbox" asp-for="Editable" hidden />
             <button type="submit" class="btn btn-outline-primary" hidden>Vaardigheid toevoegen</button>
         </form>
         <form method="post" asp-page-handler="Addcomputerskill">
@@ -151,6 +156,7 @@
                     <button type="submit" class="btn btn-outline-primary">Nieuwe computervaardigheid</button>
                 </tfooter>
             </table>
+            <input type="checkbox" asp-for="Editable" hidden />
         </form>
 
         <h1>Werkervaring</h1>
@@ -161,6 +167,7 @@
                     @werkervaring.Functie - @werkervaring.Bedrijf @werkervaring.DatumVan.ToString("MM/yyyy") - @werkervaring.DatumTot.ToString("MM/yyyy")
                     <input id="id" type="hidden" name="id" value="@werkervaring.Id" />
                     <li><button type="submit" class="btn btn-outline-primary">Verwijderen</button></li>
+                    <input type="checkbox" asp-for="Editable" hidden />
                 </form>
             </h5>
             @if (werkervaring.Taken != null)
@@ -174,6 +181,7 @@
                                 <input name="taak" type="hidden" value="@taak"/>
                                 <input name="workexperienceId" type="hidden" value="@werkervaring.Id" />
                                 <button type="submit" class="btn btn-outline-primary">-</button>
+                                <input type="checkbox" asp-for="Editable" hidden />
                             </form>                            
                         </li>
                     }
@@ -183,6 +191,7 @@
                 <input id="workexperienceTaskId" type="hidden" name="id" value="@werkervaring.Id" />
                 <label>Taak<input name="taak" type="text" /></label>
                 <button type="submit" class="btn btn-outline-primary">Toevoegen</button>
+                <input type="checkbox" asp-for="Editable" hidden />
             </form>
         }
         <form method="post" asp-page-handler="AddWorkExperience">
@@ -191,6 +200,7 @@
                 <label for="functie"><input id="werkervaringfunctie" type="text" asp-for="WerkErvaring.Functie" />Functie:</label>
                 <label for="datumvan"><input id="werkervaringdatumvan" type="date" asp-for="WerkErvaring.DatumVan" />Van:</label>
                 <label for="datumtot"><input id="werkervaringdatumtot" type="date" asp-for="WerkErvaring.DatumTot" />Tot:</label>
+                <input type="checkbox" asp-for="Editable" hidden />
                 <button type="submit" class="btn btn-outline-primary">Toevoegen werkervaring</button>
             </div>
         </form>

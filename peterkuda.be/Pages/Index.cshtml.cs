@@ -18,6 +18,7 @@ public class IndexModel : PageModel
     public ComputerVaardigheid ComputerVaardigheid { get; private set; } = null!;
     [BindProperty]
     public WerkErvaring WerkErvaring { get; private set; } = null!;
+    [BindProperty]
     public bool Editable { get; set; } = false;
 
     public IndexModel(ILogger<IndexModel> logger, ICvService cvService)
@@ -35,7 +36,7 @@ public class IndexModel : PageModel
     {
 
     }
-    public void OnPostEdit(string editable, string profiel)
+    public IActionResult OnPostEdit(string editable, string profiel)
     {
         //cv.Profiel = Request.Form["profiel"];
 
@@ -48,51 +49,59 @@ public class IndexModel : PageModel
             Editable = true;
         }
         cv.Editable = true;
+        return Page();
     }
-    public void OnPostProfiel(CvModel cv)
+    public IActionResult OnPostProfiel(CvModel cv)
     {
         if (cv != null)
         {
             cvService.SetProfiel(cv.Profiel!);
         }
+        return Page();
     }
-    public void OnPostAddlanguage(TaalModel taal)
-    {
+    public IActionResult OnPostAddlanguage(TaalModel taal)
+    {        
         cvService.AddLanguage(new CurriculumVitae.Data.Entities.TaalModel
         {
             Taal = taal.Taal,
-            Niveau = taal.Niveau,   
+            Niveau = taal.Niveau,
         });
+        return Page();
     }
-    public void OnPostAddcomputerskill(ComputerVaardigheid computervaardigheid)
+    public IActionResult OnPostAddcomputerskill(ComputerVaardigheid computervaardigheid)
     {
         cvService.AddComputerServices(new CurriculumVitae.Data.Entities.ComputerVaardigheid
         {
-            Category =" ",
+            Category = " ",
             Niveau = computervaardigheid.Niveau,
             Omschrijving = computervaardigheid.Omschrijving
         });
+        return Page();
     }
-    public void OnPostAddWorkExperience(WerkErvaring werkervaring)
+    public IActionResult OnPostAddWorkExperience(WerkErvaring werkervaring)
     {
         cvService.AddWorkExperience(new CurriculumVitae.Data.Entities.WerkErvaring
         {
-             Bedrijf = werkervaring.Bedrijf,
-             Functie = werkervaring.Functie,
-             DatumVan = werkervaring.DatumVan,
-             DatumTot = werkervaring.DatumTot             
+            Bedrijf = werkervaring.Bedrijf,
+            Functie = werkervaring.Functie,
+            DatumVan = werkervaring.DatumVan,
+            DatumTot = werkervaring.DatumTot
         });
+        return Page();
     }
-    public void OnPostAddWorkExperienceTask(int id,string taak)
+    public IActionResult OnPostAddWorkExperienceTask(int id, string taak)
     {
         cvService.AddWorkExperienceTask(id, taak);
+        return Page();
     }
-    public void OnPostDeleteWorkExperience(int id)
+    public IActionResult OnPostDeleteWorkExperience(int id)
     {
         cvService.DeleteWorkExpercience(id);
+        return Page();
     }
-    public void OnPostDeleteWorkExperienceTask(int workexperienceId, string taak)
+    public IActionResult OnPostDeleteWorkExperienceTask(int workexperienceId, string taak)
     {
         cvService.DeleteWorkExperienceTask(workexperienceId, taak);
+        return Page();
     }
 }
