@@ -58,6 +58,10 @@ public class SQLiteCvService : ICvService
                     Taken = taken
                 });
             }
+            foreach(var ervaring in dbContext.PersoonlijkeVaardigheden)
+            {
+                cvModels.PersoonlijkeVaardigheden.Add(ervaring.Name);
+            }
         }
         cvModels.PersoonlijkeVaardigheden.Add("Analytisch");
         cvModels.PersoonlijkeVaardigheden.Add("Klantgerichtheid");
@@ -160,6 +164,22 @@ public class SQLiteCvService : ICvService
                 workexperience.Taken.Remove(task);
                 dbContext.SaveChanges();
             }            
+        }
+    }
+
+    public void AddPersonalSkill(PersoonlijkeVaardigheid persoonlijkevaardigheid)
+    {
+        dbContext.PersoonlijkeVaardigheden.Add(persoonlijkevaardigheid);
+        dbContext.SaveChanges() ;
+    }
+
+    public void DeletePersonalSkillTask(int id)
+    {
+        var vaardigheid = dbContext.PersoonlijkeVaardigheden.Find(id);
+        if(vaardigheid != null)
+        {
+            dbContext.PersoonlijkeVaardigheden.Remove(vaardigheid);
+            dbContext.SaveChanges() ;
         }
     }
 }

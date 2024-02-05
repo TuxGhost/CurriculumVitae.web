@@ -127,9 +127,10 @@
                 {
                     <li>@vaardigheid</li>
                 }
-                <td><intput type="text" id="vaardigheid" hidden /></td>
+                <li><input type="text" asp-for="persoonlijkeVaardigheid.Name" /></li>
             </ul>
-            <button type="submit" hidden>Vaardigheid toevoegen</button>
+            <span asp-validation-summary></span>
+            <button type="submit" >Vaardigheid toevoegen</button>
         </form>
         <form method="post" asp-page-handler="Addcomputerskill">
             <h1>Computervaardigheden</h1>

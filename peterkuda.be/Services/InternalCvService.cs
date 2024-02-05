@@ -209,6 +209,11 @@ public class InternalCvService : ICvService
     {
         throw new NotImplementedException();
     }
+  
+    public void AddPersonalSkill(Data.Entities.PersoonlijkeVaardigheid vaardigheid)
+    {
+        throw new NotImplementedException();
+    }
 
     public void AddWorkExperience(Data.Entities.WerkErvaring werkervaring)
     {
@@ -225,6 +230,11 @@ public class InternalCvService : ICvService
     }
 
     public void DeleteLanguage(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void DeletePersonalSkillTask(int id)
     {
         throw new NotImplementedException();
     }

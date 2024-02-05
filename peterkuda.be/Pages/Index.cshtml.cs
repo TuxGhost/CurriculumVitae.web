@@ -18,7 +18,11 @@ public class IndexModel : PageModel
     public ComputerVaardigheid ComputerVaardigheid { get; private set; } = null!;
     [BindProperty]
     public WerkErvaring WerkErvaring { get; private set; } = null!;
+    [BindProperty]
+    public PersonalSkill persoonlijkeVaardigheid { get; private set; } = null!;
+    [BindProperty]
     public bool Editable { get; set; } = false;
+
 
     public IndexModel(ILogger<IndexModel> logger, ICvService cvService)
     {
@@ -61,14 +65,14 @@ public class IndexModel : PageModel
         cvService.AddLanguage(new CurriculumVitae.Data.Entities.TaalModel
         {
             Taal = taal.Taal,
-            Niveau = taal.Niveau,   
+            Niveau = taal.Niveau,
         });
     }
     public void OnPostAddcomputerskill(ComputerVaardigheid computervaardigheid)
     {
         cvService.AddComputerServices(new CurriculumVitae.Data.Entities.ComputerVaardigheid
         {
-            Category =" ",
+            Category = " ",
             Niveau = computervaardigheid.Niveau,
             Omschrijving = computervaardigheid.Omschrijving
         });
@@ -77,13 +81,13 @@ public class IndexModel : PageModel
     {
         cvService.AddWorkExperience(new CurriculumVitae.Data.Entities.WerkErvaring
         {
-             Bedrijf = werkervaring.Bedrijf,
-             Functie = werkervaring.Functie,
-             DatumVan = werkervaring.DatumVan,
-             DatumTot = werkervaring.DatumTot             
+            Bedrijf = werkervaring.Bedrijf,
+            Functie = werkervaring.Functie,
+            DatumVan = werkervaring.DatumVan,
+            DatumTot = werkervaring.DatumTot
         });
     }
-    public void OnPostAddWorkExperienceTask(int id,string taak)
+    public void OnPostAddWorkExperienceTask(int id, string taak)
     {
         cvService.AddWorkExperienceTask(id, taak);
     }
@@ -94,5 +98,14 @@ public class IndexModel : PageModel
     public void OnPostDeleteWorkExperienceTask(int workexperienceId, string taak)
     {
         cvService.DeleteWorkExperienceTask(workexperienceId, taak);
+    }
+
+    public IActionResult OnPostAddSkill(PersonalSkill persoonlijkevaardigheid)
+    {
+        cvService.AddPersonalSkill(new CurriculumVitae.Data.Entities.PersoonlijkeVaardigheid
+        {            
+            Name = persoonlijkevaardigheid.Name,            
+        });
+        return Page();
     }
 }
