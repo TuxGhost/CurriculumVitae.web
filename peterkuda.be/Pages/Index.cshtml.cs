@@ -20,6 +20,10 @@ public class IndexModel : PageModel
     public WerkErvaring WerkErvaring { get; private set; } = null!;
     [BindProperty]
     public bool Editable { get; set; } = false;
+    [BindProperty]
+    public bool AddLanguage { get; set; } = false;
+    [BindProperty]
+    public bool AddComputerVaardigheid { get; set; } = false;
 
     public IndexModel(ILogger<IndexModel> logger, ICvService cvService)
     {
@@ -60,22 +64,38 @@ public class IndexModel : PageModel
         return Page();
     }
     public IActionResult OnPostAddlanguage(TaalModel taal)
-    {        
-        cvService.AddLanguage(new CurriculumVitae.Data.Entities.TaalModel
+    {
+        if (!AddLanguage && !taal.AddData)
         {
-            Taal = taal.Taal,
-            Niveau = taal.Niveau,
-        });
+            AddLanguage = true;
+            return Page();
+        }
+        if (taal.AddData)
+        {
+            cvService.AddLanguage(new CurriculumVitae.Data.Entities.TaalModel
+            {
+                Taal = taal.Taal,
+                Niveau = taal.Niveau,
+            });
+        }        
         return Page();
     }
     public IActionResult OnPostAddcomputerskill(ComputerVaardigheid computervaardigheid)
     {
-        cvService.AddComputerServices(new CurriculumVitae.Data.Entities.ComputerVaardigheid
+        if(!AddComputerVaardigheid && !computervaardigheid.AddData)
         {
-            Category = " ",
-            Niveau = computervaardigheid.Niveau,
-            Omschrijving = computervaardigheid.Omschrijving
-        });
+            AddComputerVaardigheid = true;
+            return Page();
+        }
+        if (computervaardigheid.AddData)
+        {
+            cvService.AddComputerServices(new CurriculumVitae.Data.Entities.ComputerVaardigheid
+            {
+                Category = " ",
+                Niveau = computervaardigheid.Niveau,
+                Omschrijving = computervaardigheid.Omschrijving
+            });
+        }        
         return Page();
     }
     public IActionResult OnPostAddWorkExperience(WerkErvaring werkervaring)
