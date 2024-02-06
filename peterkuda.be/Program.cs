@@ -32,6 +32,7 @@ if (databaseService == true)
     builder.Services.AddTransient<ICvService, InternalCvService>();
 
 builder.Services.AddTransient<IEmailSender, EmailSender>();
+
 //Translations
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
@@ -67,5 +68,5 @@ app.UseAuthentication();;
 app.UseAuthorization();
 
 app.MapRazorPages();
-
+app.MapControllers();
 app.Run();
