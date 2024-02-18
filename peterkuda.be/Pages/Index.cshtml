@@ -9,7 +9,7 @@
 <div class="text-center">
     <h1 class="display-4">Welkom</h1>
 </div>
-
+<form method="post" asp-page-handler="download"><button id="download" asp-page-handler="Download" class="btn btn-outline-primary">Download</button></form>
 @if (SignInManager.IsSignedIn(User))
 {
     <input id="editable" value="false" type="hidden" asp-for="Editable" />
