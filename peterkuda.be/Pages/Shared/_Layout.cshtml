@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Peter Kuda</title>
-    <link rel="stylesheet" href="~/dist/bootstrap/css/bootstrap.min.css" />
+    <title>@ViewData["Title"] - Peter Kuda</title>    
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />    
+    <script src="~/dist/jquery-cv.js"></script>
 </head>
 <body>
     <header>
@@ -39,11 +39,10 @@
             <span><a id="loginlink" asp-area="Identity" asp-page="/Account/Login">&copy;</a> 2023 All rights reserved</span>
         </div>
     </footer>
-
-    <script src="~/dist/jquery/jquery.min.js"></script>
-    <script src="~/dist/bundle.js"></script>
+    
+    <script src="~/dist/bootstrap-cv.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
-    @await RenderSectionAsync("Scripts", required: false)
+    @await RenderSectionAsync("Scripts", required: false )
 </body>
 </html>

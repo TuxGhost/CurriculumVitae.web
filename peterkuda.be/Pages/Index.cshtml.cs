@@ -103,9 +103,19 @@ public class IndexModel : PageModel
     public IActionResult OnPostAddSkill(PersonalSkill persoonlijkevaardigheid)
     {
         cvService.AddPersonalSkill(new CurriculumVitae.Data.Entities.PersoonlijkeVaardigheid
-        {            
-            Name = persoonlijkevaardigheid.Name,            
+        {
+            Name = persoonlijkevaardigheid.Name,
         });
         return Page();
+    }
+    public IActionResult OnPostUpdatePersonalSkill([FromBody] PersonalSkill personalSkill)
+    {
+        cvService.UpdatePersonalSkill(personalSkill);
+        return new OkResult();
+    }
+    public IActionResult OnPostDeletePersonalSkill([FromBody] PersonalSkill personalSkill)
+    {
+        cvService.DeletePersonalSkill(personalSkill);
+        return new OkResult();
     }
 }

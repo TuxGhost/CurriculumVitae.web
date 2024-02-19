@@ -45,9 +45,14 @@
 
         <h1>Vaardigheden</h1>
         <ul>
-            @foreach (var vaardigheid in Model.cv.PersoonlijkeVaardigheden)
+            @foreach (var vaardigheid in Model.cv.PersonalSkills)
             {
-                <li>@vaardigheid</li>
+                @if (vaardigheid.Enabled == true)
+                {
+                    <li class="skill">
+                        @vaardigheid.Name
+                    </li>
+                }
             }
         </ul>
         <h1>Computervaardigheden</h1>
@@ -122,15 +127,25 @@
         </form>
         <form method="post" asp-page-handler="AddSkill">
             <h1>Persoonlijke Vaardigheden</h1>
-            <ul>
-                @foreach (var vaardigheid in Model.cv.PersoonlijkeVaardigheden)
+            <div>
+                @foreach (var vaardigheid in Model.cv.PersonalSkills.OrderBy(r => r.Name))
                 {
-                    <li>@vaardigheid</li>
+                    <div class="row" class="personalskill">
+                        <div class="col">
+                            @vaardigheid.Name
+                        </div>
+                        <div class="col">
+                            <input type="checkbox" @(vaardigheid.Enabled ? "checked" : "") />
+                        </div>
+                        <div class="col">
+                            <img src="~/Images/delete.png" onclick="RemovePersonalSkill('@vaardigheid.Name',this)" />
+                        </div>
+                    </div>
                 }
-                <li><input type="text" asp-for="persoonlijkeVaardigheid.Name" /></li>
-            </ul>
+            </div>
+            <input type="text" asp-for="persoonlijkeVaardigheid.Name" />
             <span asp-validation-summary></span>
-            <button type="submit" >Vaardigheid toevoegen</button>
+            <button type="submit">Vaardigheid toevoegen</button>
         </form>
         <form method="post" asp-page-handler="Addcomputerskill">
             <h1>Computervaardigheden</h1>
@@ -172,10 +187,10 @@
                         <li>@taak</li>
                         <li>
                             <form asp-page-handler="DeleteWorkExperienceTask" method="post">
-                                <input name="taak" type="hidden" value="@taak"/>
+                                <input name="taak" type="hidden" value="@taak" />
                                 <input name="workexperienceId" type="hidden" value="@werkervaring.Id" />
                                 <button type="submit">-</button>
-                            </form>                            
+                            </form>
                         </li>
                     }
                 </ul>
@@ -197,15 +212,40 @@
         </form>
     }
 }
-<script>
-    function Edit() {
-        var editable = document.getElementById("editable");
-        var edit = editable.value
-        if (edit == 'false')
-            edit = 'true';
-        else
-            edit = 'false';
-        editable.value = edit;
-        console.log(`edit button clicked - ${edit}`);
-    }
-</script>
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(function (checkbox) {
+                checkbox.addEventListener('change', function () {
+                    var isChecked = this.checked;
+                    var vaardigheidnaam = this.closest('.row').querySelector('.col:first-child').innerText.trim();
+                    var verificationToken = document.querySelector('input[name="__RequestVerificationToken"]').value
+                    // send AJAX request to update the database
+                    fetch('/?handler=UpdatePersonalSkill', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'RequestVerificationToken': verificationToken
+                        },
+                        body: JSON.stringify({ Name: vaardigheidnaam, Enabled: isChecked })
+                    });
+                });
+            });           
+        });
+        RemovePersonalSkill = function (value , element) {
+            console.log('vaardigheid');
+            console.log(value);
+            console.log(element);
+            var verificationToken = document.querySelector('input[name="__RequestVerificationToken"]').value
+            fetch('/?handler=DeletePersonalSkill', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': verificationToken
+                },
+                body: JSON.stringify({ Name: value , Enabled: true})
+            });            
+        }
+    </script>
+}
