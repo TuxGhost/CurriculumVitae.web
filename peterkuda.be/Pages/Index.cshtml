@@ -131,23 +131,17 @@
                 <span asp-validation-for="Taal.Niveau"></span>
             }
         </form>
-
-        <h1>Vaardigheden</h1>
-        <ul>
-            @foreach (var vaardigheid in Model.cv.PersoonlijkeVaardigheden)
-            {
-                <li>@vaardigheid</li>
-            }
-
-        </ul>
         <form method="post" asp-page-handler="AddSkill">
-            <button type="submit" class="btn btn-outline-primary" hidden>Vaardigheid toevoegen</button>            
-            @if (Model.AddComputerVaardigheid)
-            {
-                <input type="text" id="vaardigheid" hidden />                
-                <input type="checkbox" asp-for="Editable" hidden />          
-                
-            }
+            <h1>Persoonlijke Vaardigheden</h1>
+            <ul>
+                @foreach (var vaardigheid in Model.cv.PersoonlijkeVaardigheden)
+                {
+                    <li>@vaardigheid</li>
+                }
+                <li><input type="text" asp-for="persoonlijkeVaardigheid.Name" /></li>
+            </ul>
+            <span asp-validation-summary></span>
+            <button type="submit" >Vaardigheid toevoegen</button>
         </form>
         <h1>Computervaardigheden</h1>
         <table class="table">

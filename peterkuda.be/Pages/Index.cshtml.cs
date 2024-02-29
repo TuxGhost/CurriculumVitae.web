@@ -24,11 +24,14 @@ public class IndexModel : PageModel
     [BindProperty]
     public WerkErvaring WerkErvaring { get; private set; } = null!;
     [BindProperty]
+    public PersonalSkill persoonlijkeVaardigheid { get; private set; } = null!;
+    [BindProperty]
     public bool Editable { get; set; } = false;
     [BindProperty]
     public bool AddLanguage { get; set; } = false;
     [BindProperty]
     public bool AddComputerVaardigheid { get; set; } = false;
+
 
     public IndexModel(ILogger<IndexModel> logger, ICvService cvService)
     {
@@ -154,5 +157,14 @@ public class IndexModel : PageModel
         var memoryStream = new MemoryStream();
         renderer.PdfDocument.Save(memoryStream);
         return File(memoryStream.ToArray(), "application/pdf", "cvPeterKuda.pdf");
+    }
+
+    public IActionResult OnPostAddSkill(PersonalSkill persoonlijkevaardigheid)
+    {
+        cvService.AddPersonalSkill(new CurriculumVitae.Data.Entities.PersoonlijkeVaardigheid
+        {            
+            Name = persoonlijkevaardigheid.Name,            
+        });
+        return Page();
     }
 }

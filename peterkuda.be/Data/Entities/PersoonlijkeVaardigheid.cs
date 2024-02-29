@@ -2,11 +2,12 @@
 
 namespace CurriculumVitae.Data.Entities;
 
-public class Profiel
+public class PersoonlijkeVaardigheid
 {
     [Key]
     public uint Id { get; set; }
     [Required]
-    public required string Beschrijving { get; set; } = null!;
+    public string Name { get; set; }
+    [Required]
     public bool Enabled { get; set; } = true;
 }

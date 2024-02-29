@@ -5,7 +5,7 @@ module.exports = {
     output: {
         filename: 'bootstrap.js',
         path: path.resolve(__dirname,'wwwroot/dist'),
-    },
+    },   
     module: {
         rules: [
             {
