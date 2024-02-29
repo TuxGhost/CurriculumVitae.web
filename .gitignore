@@ -368,3 +368,6 @@ FodyWeavers.xsd
 /peterkuda.be/Services/appsettings.json
 /peterkuda.be/wwwroot/dist
 /cv.db
+*.db-shm
+*.db-wal
+*.db

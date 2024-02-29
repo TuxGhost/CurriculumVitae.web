@@ -31,9 +31,16 @@ public class IndexModel : PageModel
         cv = cvService.GetCv();
     }
 
-    public void OnGet()
+    public IActionResult OnGet()
     {
-        cv = this.cv;
+        try
+        {
+            cv = this.cv;
+        } catch(Exception ex)
+        {
+            _logger.LogError(ex.Message);            
+        }
+        return Page();
     }
     public void OnPost()
     {
