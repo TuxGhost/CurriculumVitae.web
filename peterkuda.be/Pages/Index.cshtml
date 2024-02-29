@@ -7,7 +7,7 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welkom</h1>
+    <h1 class="display-4" hidden>Welkom</h1>
 </div>
 @if (SignInManager.IsSignedIn(User))
 {
@@ -130,7 +130,7 @@
             <div>
                 @foreach (var vaardigheid in Model.cv.PersonalSkills.OrderBy(r => r.Name))
                 {
-                    <div class="row" class="personalskill">
+                    <div class="row personalskill">
                         <div class="col">
                             @vaardigheid.Name
                         </div>

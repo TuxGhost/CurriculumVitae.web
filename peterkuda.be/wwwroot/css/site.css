@@ -63,3 +63,9 @@ li.skill {
         display:inline-block;
         min-width: 200px;        
 }
+
+@media print {
+    .hidden-on-print {
+        display: none !important;
+    }
+}

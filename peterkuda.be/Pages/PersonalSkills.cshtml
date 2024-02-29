@@ -1,0 +1,25 @@
+﻿@page
+@model CurriculumVitae.Pages.PersonalskillsModel
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@if (!SignInManager.IsSignedIn(User))
+{
+    <h1>U bent niet bevoegd voor deze pagina</h1>
+    return;
+}
+@if(Model.SkillList != null)
+{
+    <div class="grid text-center">
+        @foreach (var item in Model.SkillList)
+        {
+            <div class="g-col-4">
+                <span>@item.Name</span>
+            </div>
+        }
+    </div>
+    
+}
+
+@{
+}
