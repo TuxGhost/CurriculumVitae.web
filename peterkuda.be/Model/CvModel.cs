@@ -8,6 +8,7 @@ public class CvModel
     public List<string> Lijnen { get; set; }  = new List<string>();
     public List<TaalModel> Talen { get; set; } = new List<TaalModel>();
     public List<string> PersoonlijkeVaardigheden { get; set; } = new List<string> ();
+    public List<PersonalSkill> PersonalSkills { get; set; } = new List<PersonalSkill> ();
     public List<ComputerVaardigheid> ComputerVaardigheden { get; set; } = new List<ComputerVaardigheid>();
     public List<WerkErvaring> WerkErvaringen { get; set; } = new List<WerkErvaring>();
 }

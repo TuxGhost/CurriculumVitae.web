@@ -8,5 +8,4 @@ public class TaalModel
     public int Id { get; set; }
     public string Taal { get; set; } = null!;
     public string Niveau { get; set; } = null!;
-    public bool Enabled { get; set; } = true;
 }

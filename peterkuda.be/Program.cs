@@ -68,5 +68,14 @@ app.UseAuthentication();;
 app.UseAuthorization();
 
 app.MapRazorPages();
-app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var applicationDbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    var r1 = applicationDbContext.Database.EnsureCreated();
+    var cvDbContext = scope.ServiceProvider.GetRequiredService<CurriculumVitaeDbContext>();
+    var r2 = cvDbContext.Database.EnsureCreated();
+    cvDbContext.Database.Migrate();
+}
+
 app.Run();

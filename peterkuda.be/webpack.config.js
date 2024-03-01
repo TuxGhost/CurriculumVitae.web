@@ -1,10 +1,14 @@
 ﻿const path = require('path');
 
 module.exports = {
-    entry: './src/js/index.js',
+    entry: {
+        bootstrap: './src/js/index.js', // Replace with your entry file
+        jquery: './src/js/jquery.js'
+    },
     output: {
-        filename: 'bootstrap.js',
-        path: path.resolve(__dirname,'wwwroot/dist'),
+        filename: '[name]-cv.js',
+        path: path.resolve(__dirname, 'wwwroot','dist'), // Replace with your output directory
+        
     },   
     module: {
         rules: [

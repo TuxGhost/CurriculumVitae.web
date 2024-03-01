@@ -234,6 +234,11 @@ public class InternalCvService : ICvService
         throw new NotImplementedException();
     }
 
+    public void DeletePersonalSkill(Data.Entities.PersoonlijkeVaardigheid vaardigheid)
+    {
+        throw new NotImplementedException();
+    }
+
     public void DeletePersonalSkillTask(int id)
     {
         throw new NotImplementedException();
@@ -255,6 +260,11 @@ public class InternalCvService : ICvService
     }
 
     public void SetProfiel(string profiel)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void UpdatePersonalSkill(Data.Entities.PersoonlijkeVaardigheid vaardigheid)
     {
         throw new NotImplementedException();
     }

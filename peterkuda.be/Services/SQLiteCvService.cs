@@ -4,6 +4,7 @@ using CurriculumVitae.Data.Migrations;
 using CurriculumVitae.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace CurriculumVitae.Services;
 
@@ -61,6 +62,12 @@ public class SQLiteCvService : ICvService
             foreach(var ervaring in dbContext.PersoonlijkeVaardigheden)
             {
                 cvModels.PersoonlijkeVaardigheden.Add(ervaring.Name);
+                cvModels.PersonalSkills.Add(new PersonalSkill
+                {
+                    Id = ervaring.Id,
+                    Name = ervaring.Name,
+                    Enabled = ervaring.Enabled,
+                });
             }
         }
         cvModels.PersoonlijkeVaardigheden.Add("Analytisch");
@@ -169,8 +176,11 @@ public class SQLiteCvService : ICvService
 
     public void AddPersonalSkill(PersoonlijkeVaardigheid persoonlijkevaardigheid)
     {
-        dbContext.PersoonlijkeVaardigheden.Add(persoonlijkevaardigheid);
-        dbContext.SaveChanges() ;
+        if(persoonlijkevaardigheid.Name != null)
+        {
+            dbContext.PersoonlijkeVaardigheden.Add(persoonlijkevaardigheid);
+            dbContext.SaveChanges();
+        }        
     }
 
     public void DeletePersonalSkillTask(int id)
@@ -180,6 +190,46 @@ public class SQLiteCvService : ICvService
         {
             dbContext.PersoonlijkeVaardigheden.Remove(vaardigheid);
             dbContext.SaveChanges() ;
+        }
+    }
+
+    public void UpdatePersonalSkill(PersoonlijkeVaardigheid vaardigheid)
+    {
+        if(vaardigheid.Id != 0)
+        {            
+            dbContext.PersoonlijkeVaardigheden.Update(vaardigheid);
+            dbContext.SaveChanges();
+        }else
+        {
+            if(vaardigheid.Name != null && vaardigheid.Name != string.Empty)
+            {
+                var dbVaardigheden = dbContext.PersoonlijkeVaardigheden
+                    .Where(r => r.Name == vaardigheid.Name);
+                foreach (var item in dbVaardigheden)
+                {
+                    item.Enabled = vaardigheid.Enabled;
+                    dbContext.PersoonlijkeVaardigheden.Update(item);
+                    dbContext.SaveChanges();
+                }
+            }
+        }
+    }
+
+    public void DeletePersonalSkill(PersoonlijkeVaardigheid vaardigheid)
+    {
+        if(vaardigheid.Id != 0)
+        {
+            dbContext.PersoonlijkeVaardigheden.Remove(vaardigheid);
+            dbContext.SaveChanges();
+        } else
+        {
+            if(vaardigheid.Name != null && vaardigheid.Name != string.Empty)
+            {
+                var dbVaardigheden = dbContext.PersoonlijkeVaardigheden
+                    .Where(r => r.Name == vaardigheid.Name);
+                dbContext.RemoveRange(dbVaardigheden);
+                dbContext.SaveChanges() ;
+            }
         }
     }
 }
