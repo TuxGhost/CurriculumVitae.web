@@ -68,7 +68,7 @@ app.UseAuthentication();;
 app.UseAuthorization();
 
 app.MapRazorPages();
-
+app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
     var applicationDbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
