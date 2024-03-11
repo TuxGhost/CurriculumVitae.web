@@ -153,9 +153,10 @@ public class IndexModel : PageModel
         var memoryStream = new MemoryStream();
         doc.Save(memoryStream, false);
         return File(memoryStream.ToArray(),"application/pdf","cvPeterKuda.pdf") ;        */
-        var document = CVDocument.CreateDocument();
-        var ddl = MigraDoc.DocumentObjectModel.IO.DdlWriter.WriteToString(document);
-        MigraDoc.DocumentObjectModel.IO.DdlWriter.WriteToFile(document, "migradoc.mdd1");
+        //CVDocument cVDocument = new CVDocument(this.cvService.get)
+        var document = CVDocument.CreateDocument(cvService.GetCv());
+        //var ddl = MigraDoc.DocumentObjectModel.IO.DdlWriter.WriteToString(document);
+        //MigraDoc.DocumentObjectModel.IO.DdlWriter.WriteToFile(document, "migradoc.mdd1");
         var renderer = new PdfDocumentRenderer
         {
             Document = document
