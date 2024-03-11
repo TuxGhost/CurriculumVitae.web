@@ -9,10 +9,11 @@
 <div class="text-center">
     <h1 class="display-4" hidden>Welkom</h1>
 </div>
+<form method="post" asp-page-handler="download"><button id="download" asp-page-handler="Download" class="btn btn-outline-primary">Download</button></form>
 @if (SignInManager.IsSignedIn(User))
 {
-    <input id="editable" value="false" type="hidden" />
-    <form method="post" asp-page-handler="edit"><button id="edit" asp-page-handler="Edit">Edit</button></form>
+    <input id="editable" value="false" type="hidden" asp-for="Editable" />
+    <form method="post" asp-page-handler="edit"><button id="edit" asp-page-handler="Edit" class="btn btn-outline-primary">Edit</button></form>
 }
 @if (Model != null && Model.cv != null)
 {
@@ -27,8 +28,8 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Taal</th>
-                    <th>Lezen</th>
+                    <th scope="col">Taal</th>
+                    <th scope="col">Lezen</th>
                 </tr>
             </thead>
             <tbody>
@@ -91,39 +92,49 @@
             <label for="profiel" asp-for="cv.Profiel">Profiel tekst</label>
             @*<input type="text" id="profiel" asp-for="@Model.cv.Profiel" value="@Model.cv.Profiel" />*@
             <textarea id="profiel" asp-for="cv.Profiel"></textarea>
-            <button type="submit">Bewaar profiel</button>
+            <span asp-validation-for="cv.Profiel" class="danger"></span>
+            <button type="submit" class="btn btn-outline-primary">Bewaar profiel</button>
         </form>
         @foreach (var lijn in Model.cv.Lijnen)
         {
             <p>@lijn</p>
         }
-        <form method="post" asp-page-handler="Addlanguage">
-            <h1>Talen</h1>
-            <table class="table">
-                <thead>
+        <h1>Talen</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Taal</th>
+                    <th scope="col">Lezen</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var taal in Model.cv.Talen)
+                {
                     <tr>
-                        <th>Taal</th>
-                        <th>Lezen</th>
+                        <td>@taal.Taal</td>
+                        <td>@taal.Niveau</td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach (var taal in Model.cv.Talen)
-                    {
-                        <tr>
-                            <td>@taal.Taal</td>
-                            <td>@taal.Niveau</td>
-                        </tr>
-                    }
-                    <tr>
-                        <td><input type="text" asp-for="Taal.Taal" id="taal" /></td>
-                        <td><input type="text" asp-for="Taal.Niveau" id="niveau" /></td>
-                    </tr>
-                </tbody>
-                <tfooter>
+                }
 
-                    <button type="submit">Nieuwe taal</button>
-                </tfooter>
-            </table>
+                <tr>
+                </tr>
+            </tbody>
+            <tfooter>
+            </tfooter>
+        </table>
+
+        <form method="post" asp-page-handler="Addlanguage" id="frmNieuwtaal">
+            <button id="btnNieuwtaal" onclick="setNieuwetaalIngave" type="submit" class="btn btn-outline-primary">Nieuwe taal</button>
+            <input type="checkbox" asp-for="Editable" hidden />
+            <input type="checkbox" asp-for="AddLanguage" id="addLanguage" name="addLanguage" hidden />
+            @if (Model.AddLanguage)
+            {
+                <td><input type="text" asp-for="Taal.Taal" id="taal" /></td>
+                <td><input type="text" asp-for="Taal.Niveau" id="niveau" /></td>
+                <input type="checkbox" asp-for="Taal.AddData" id="toevoegen"  checked hidden/>
+                <span asp-validation-for="Taal.Taal"></span>
+                <span asp-validation-for="Taal.Niveau"></span>
+            }
         </form>
         <form method="post" asp-page-handler="AddSkill">
             <h1>Persoonlijke Vaardigheden</h1>
@@ -147,26 +158,31 @@
             <span asp-validation-summary></span>
             <button type="submit">Vaardigheid toevoegen</button>
         </form>
-        <form method="post" asp-page-handler="Addcomputerskill">
-            <h1>Computervaardigheden</h1>
-            <table class="table">
-                <tbody>
-                    @foreach (var vaardigheid in Model.cv.ComputerVaardigheden)
-                    {
-                        <tr>
-                            <td>@vaardigheid.Omschrijving</td>
-                            <td>@vaardigheid.Niveau</td>
-                        </tr>
-                    }
+        <h1>Computervaardigheden</h1>
+        <table class="table">
+            <tbody>
+                @foreach (var vaardigheid in Model.cv.ComputerVaardigheden)
+                {
                     <tr>
-                        <td><input id="vaardigheidcomputeromschrijving" asp-for="ComputerVaardigheid.Omschrijving" type="text" /></td>
-                        <td><input id="vaardigheidcomputerniveau" type="text" asp-for="ComputerVaardigheid.Niveau" /></td>
+                        <td>@vaardigheid.Omschrijving</td>
+                        <td>@vaardigheid.Niveau</td>
                     </tr>
-                </tbody>
-                <tfooter>
-                    <button type="submit">Nieuwe computervaardigheid</button>
-                </tfooter>
-            </table>
+                }
+            </tbody>
+            <tfooter>
+
+            </tfooter>
+        </table>
+        <form method="post" asp-page-handler="Addcomputerskill">
+            <button type="submit" class="btn btn-outline-primary">Nieuwe computervaardigheid</button>
+            <input type="checkbox" asp-for="Editable" hidden />
+            <input type="checkbox" asp-for="AddComputerVaardigheid"  hidden/>
+            @if (Model.AddComputerVaardigheid == true)
+            {
+                <input id="vaardigheidcomputeromschrijving" asp-for="ComputerVaardigheid.Omschrijving" type="text" />
+                <input id="vaardigheidcomputerniveau" type="text" asp-for="ComputerVaardigheid.Niveau" />
+                <input id="toevoegen" type="checkbox" asp-for="ComputerVaardigheid.AddData" checked />
+            }           
         </form>
 
         <h1>Werkervaring</h1>
@@ -176,7 +192,8 @@
                 <form method="post" asp-page-handler="DeleteWorkExperience">
                     @werkervaring.Functie - @werkervaring.Bedrijf @werkervaring.DatumVan.ToString("MM/yyyy") - @werkervaring.DatumTot.ToString("MM/yyyy")
                     <input id="id" type="hidden" name="id" value="@werkervaring.Id" />
-                    <li><button type="submit">Verwijderen</button></li>
+                    <li><button type="submit" class="btn btn-outline-primary">Verwijderen</button></li>
+                    <input type="checkbox" asp-for="Editable" hidden />
                 </form>
             </h5>
             @if (werkervaring.Taken != null)
@@ -189,7 +206,8 @@
                             <form asp-page-handler="DeleteWorkExperienceTask" method="post">
                                 <input name="taak" type="hidden" value="@taak" />
                                 <input name="workexperienceId" type="hidden" value="@werkervaring.Id" />
-                                <button type="submit">-</button>
+                                <button type="submit" class="btn btn-outline-primary">-</button>
+                                <input type="checkbox" asp-for="Editable" hidden />
                             </form>
                         </li>
                     }
@@ -198,7 +216,8 @@
             <form asp-page-handler="AddWorkExperienceTask" method="post">
                 <input id="workexperienceTaskId" type="hidden" name="id" value="@werkervaring.Id" />
                 <label>Taak<input name="taak" type="text" /></label>
-                <button type="submit">Toevoegen</button>
+                <button type="submit" class="btn btn-outline-primary">Toevoegen</button>
+                <input type="checkbox" asp-for="Editable" hidden />
             </form>
         }
         <form method="post" asp-page-handler="AddWorkExperience">
@@ -207,7 +226,8 @@
                 <label for="functie"><input id="werkervaringfunctie" type="text" asp-for="WerkErvaring.Functie" />Functie:</label>
                 <label for="datumvan"><input id="werkervaringdatumvan" type="date" asp-for="WerkErvaring.DatumVan" />Van:</label>
                 <label for="datumtot"><input id="werkervaringdatumtot" type="date" asp-for="WerkErvaring.DatumTot" />Tot:</label>
-                <button type="submit">Toevoegen werkervaring</button>
+                <input type="checkbox" asp-for="Editable" hidden />
+                <button type="submit" class="btn btn-outline-primary">Toevoegen werkervaring</button>
             </div>
         </form>
     }

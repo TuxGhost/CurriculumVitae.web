@@ -1,7 +1,12 @@
 ﻿using CurriculumVitae.Model;
+using CurriculumVitae.pdfSharp;
 using CurriculumVitae.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using MigraDoc.Rendering;
+using PdfSharp;
+using PdfSharp.Drawing;
+using PdfSharp.Pdf;
 using System.ComponentModel.DataAnnotations;
 
 namespace peterkuda.be.Pages;
@@ -22,6 +27,10 @@ public class IndexModel : PageModel
     public PersonalSkill persoonlijkeVaardigheid { get; private set; } = null!;
     [BindProperty]
     public bool Editable { get; set; } = false;
+    [BindProperty]
+    public bool AddLanguage { get; set; } = false;
+    [BindProperty]
+    public bool AddComputerVaardigheid { get; set; } = false;
 
 
     public IndexModel(ILogger<IndexModel> logger, ICvService cvService)
@@ -31,15 +40,22 @@ public class IndexModel : PageModel
         cv = cvService.GetCv();
     }
 
-    public void OnGet()
+    public IActionResult OnGet()
     {
-        cv = this.cv;
+        try
+        {
+            cv = this.cv;
+        } catch(Exception ex)
+        {
+            _logger.LogError(ex.Message);            
+        }
+        return Page();
     }
     public void OnPost()
     {
 
     }
-    public void OnPostEdit(string editable, string profiel)
+    public IActionResult OnPostEdit(string editable, string profiel)
     {
         //cv.Profiel = Request.Form["profiel"];
 
@@ -52,32 +68,52 @@ public class IndexModel : PageModel
             Editable = true;
         }
         cv.Editable = true;
+        return Page();
     }
-    public void OnPostProfiel(CvModel cv)
+    public IActionResult OnPostProfiel(CvModel cv)
     {
         if (cv != null)
         {
             cvService.SetProfiel(cv.Profiel!);
         }
+        return Page();
     }
-    public void OnPostAddlanguage(TaalModel taal)
+    public IActionResult OnPostAddlanguage(TaalModel taal)
     {
-        cvService.AddLanguage(new CurriculumVitae.Data.Entities.TaalModel
+        if (!AddLanguage && !taal.AddData)
         {
-            Taal = taal.Taal,
-            Niveau = taal.Niveau,
-        });
+            AddLanguage = true;
+            return Page();
+        }
+        if (taal.AddData)
+        {
+            cvService.AddLanguage(new CurriculumVitae.Data.Entities.TaalModel
+            {
+                Taal = taal.Taal,
+                Niveau = taal.Niveau,
+            });
+        }        
+        return Page();
     }
-    public void OnPostAddcomputerskill(ComputerVaardigheid computervaardigheid)
+    public IActionResult OnPostAddcomputerskill(ComputerVaardigheid computervaardigheid)
     {
-        cvService.AddComputerServices(new CurriculumVitae.Data.Entities.ComputerVaardigheid
+        if(!AddComputerVaardigheid && !computervaardigheid.AddData)
         {
-            Category = " ",
-            Niveau = computervaardigheid.Niveau,
-            Omschrijving = computervaardigheid.Omschrijving
-        });
+            AddComputerVaardigheid = true;
+            return Page();
+        }
+        if (computervaardigheid.AddData)
+        {
+            cvService.AddComputerServices(new CurriculumVitae.Data.Entities.ComputerVaardigheid
+            {
+                Category = " ",
+                Niveau = computervaardigheid.Niveau,
+                Omschrijving = computervaardigheid.Omschrijving
+            });
+        }        
+        return Page();
     }
-    public void OnPostAddWorkExperience(WerkErvaring werkervaring)
+    public IActionResult OnPostAddWorkExperience(WerkErvaring werkervaring)
     {
         cvService.AddWorkExperience(new CurriculumVitae.Data.Entities.WerkErvaring
         {
@@ -86,18 +122,49 @@ public class IndexModel : PageModel
             DatumVan = werkervaring.DatumVan,
             DatumTot = werkervaring.DatumTot
         });
+        return Page();
     }
-    public void OnPostAddWorkExperienceTask(int id, string taak)
+    public IActionResult OnPostAddWorkExperienceTask(int id, string taak)
     {
         cvService.AddWorkExperienceTask(id, taak);
+        return Page();
     }
-    public void OnPostDeleteWorkExperience(int id)
+    public IActionResult OnPostDeleteWorkExperience(int id)
     {
         cvService.DeleteWorkExpercience(id);
+        return Page();
     }
-    public void OnPostDeleteWorkExperienceTask(int workexperienceId, string taak)
+    public IActionResult OnPostDeleteWorkExperienceTask(int workexperienceId, string taak)
     {
         cvService.DeleteWorkExperienceTask(workexperienceId, taak);
+        return Page();
+    }
+    public IActionResult OnPostDownload()
+    {
+        /*PdfDocument doc = new PdfDocument();        
+        PdfPage page = doc.AddPage();
+        XSize size = PageSizeConverter.ToSize(PdfSharp.PageSize.A4);
+        page.Width = size.Width;
+        page.Height= size.Height;
+        page.TrimMargins.Top = 5;
+        page.TrimMargins.Bottom = 5;
+        page.TrimMargins.Left = 5;
+        page.TrimMargins.Right = 5;        
+        var memoryStream = new MemoryStream();
+        doc.Save(memoryStream, false);
+        return File(memoryStream.ToArray(),"application/pdf","cvPeterKuda.pdf") ;        */
+        //CVDocument cVDocument = new CVDocument(this.cvService.get)
+        var document = CVDocument.CreateDocument(cvService.GetCv());
+        //var ddl = MigraDoc.DocumentObjectModel.IO.DdlWriter.WriteToString(document);
+        //MigraDoc.DocumentObjectModel.IO.DdlWriter.WriteToFile(document, "migradoc.mdd1");
+        var renderer = new PdfDocumentRenderer
+        {
+            Document = document
+        };
+        renderer.RenderDocument();
+        var memoryStream = new MemoryStream();
+        renderer.PdfDocument.Save(memoryStream);
+        return File(memoryStream.ToArray(), "application/pdf", "cvPeterKuda.pdf");
     }
 
     public IActionResult OnPostAddSkill(PersonalSkill persoonlijkevaardigheid)
