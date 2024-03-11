@@ -24,5 +24,16 @@ namespace CurriculumVitae.Areas.api
         {
             return base.Ok();
         }
+        [HttpGet("personalskills")]
+        public IActionResult PersonalSkills()
+        {
+            CvModel cv = cvService.GetCv();
+            List<string> items = new();
+            foreach(var item in cv.PersonalSkills)
+            {
+                items.Add(item.Name);
+            }
+            return base.Ok(items);
+        }
     }
 }
