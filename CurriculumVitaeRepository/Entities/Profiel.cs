@@ -1,11 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CurriculumVitae.Data.Entities;
-
+namespace CurriculumVitaeRepository.Entities;
 public class Profiel
 {
     [Key]
-    public uint Id { get; set; }
-    [Required]
-    public string Beschrijving { get; set; } = null!;
+    public uint Id { get; set; }    
+    public required string Beschrijving { get; set; }
 }

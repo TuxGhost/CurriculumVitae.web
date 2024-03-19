@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CurriculumVitae.Data.Entities;
+namespace CurriculumVitaeRepository.Entities;
 
 public class Taak
 {
     public uint Id { get; set; }
-    [Required]
-    public string Bechrijving { get; set; } = null!;
+    public required WerkErvaring WerkErvaring { get;set; }
+    public required string Bechrijving { get; set; } = null!;
 }

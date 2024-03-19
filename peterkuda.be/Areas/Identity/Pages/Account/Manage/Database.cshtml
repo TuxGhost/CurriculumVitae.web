@@ -1,0 +1,21 @@
+﻿@page
+@model DatabaseModel
+@{
+    ViewData["Title"] = "Database";
+    ViewData["ActivePage"] = ManageNavPages.Database;
+}
+
+<h3>@ViewData["Title"]</h3>
+<partial name="_StatusMessage" for="StatusMessage" />
+<div class="row">
+    <div class="col-md-6">
+        <form id="database-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <button id="migrate-database-button" type="submit" disabled="@Model.CanBeMigrated" class="w-100 btn btn-lg btn-primary">Migrate</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

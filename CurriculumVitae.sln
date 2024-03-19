@@ -5,7 +5,7 @@ VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurriculumVitae.Web", "peterkuda.be\CurriculumVitae.Web.csproj", "{15AF6C62-E43D-44D6-A7B8-69F152845879}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurriculumVitaeRepository", "CurriculumVitaeData\CurriculumVitaeRepository.csproj", "{E739B94D-3BC1-42BE-B477-6E9F656CABF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurriculumVitaeRepository", "CurriculumVitaeRepository\CurriculumVitaeRepository.csproj", "{2B9C0729-BFEB-46FC-9B7F-453C00A2F7F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{15AF6C62-E43D-44D6-A7B8-69F152845879}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15AF6C62-E43D-44D6-A7B8-69F152845879}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15AF6C62-E43D-44D6-A7B8-69F152845879}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E739B94D-3BC1-42BE-B477-6E9F656CABF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E739B94D-3BC1-42BE-B477-6E9F656CABF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E739B94D-3BC1-42BE-B477-6E9F656CABF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E739B94D-3BC1-42BE-B477-6E9F656CABF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B9C0729-BFEB-46FC-9B7F-453C00A2F7F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B9C0729-BFEB-46FC-9B7F-453C00A2F7F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B9C0729-BFEB-46FC-9B7F-453C00A2F7F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B9C0729-BFEB-46FC-9B7F-453C00A2F7F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

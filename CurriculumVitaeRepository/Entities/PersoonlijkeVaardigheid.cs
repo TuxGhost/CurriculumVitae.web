@@ -1,13 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CurriculumVitae.Data.Entities;
+namespace CurriculumVitaeRepository.Entities;
 
-public class PersoonlijkeVaardigheid
+public class Persoonlijkevaardigheid
 {
     [Key]
     public uint Id { get; set; }
-    [Required]
-    public string Name { get; set; } = string.Empty;
-    [Required]
-    public bool Enabled { get; set; } = true;
+    public required Profiel profiel { get; set; }    
+    public required string Name { get; set; }  
+    public required bool Enabled { get; set; }
 }
