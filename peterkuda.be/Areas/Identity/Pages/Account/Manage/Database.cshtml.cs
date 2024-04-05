@@ -75,16 +75,22 @@ namespace CurriculumVitae.Areas.Identity.Pages.Account.Manage
             {
                 PhoneNumber = phoneNumber
             };
-            //try
-            //{
-            //   var test = await _cvDbContext.Profielen.ToListAsync();
-            //    StatusMessage = "Database up to date";
-            //    CanBeMigrated = true;
-            //} catch (Exception ex)
-            //{
-            //    CanBeMigrated = true;
-            //    StatusMessage = ex.Message;
-            //}
+            try
+            {
+                var test = await _cvDbContext.Profielen.ToListAsync();
+                var pendingMigrations = await _cvDbContext.Database.GetPendingMigrationsAsync();
+                if (pendingMigrations.Count() == 0)
+                {
+                    CanBeMigrated = true;
+                    StatusMessage = "Database up to date";
+                }else
+                    CanBeMigrated= true;                                
+            }
+            catch (Exception ex)
+            {
+                CanBeMigrated = true;
+                StatusMessage = ex.Message;
+            }
         }
 
         public async Task<IActionResult> OnGetAsync()
