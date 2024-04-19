@@ -28,7 +28,10 @@ public class SQLiteCvService : ICvService
             }
             foreach (var taal in dbContext.Talen)
             {
-                cvModels.Talen.Add(new Model.TaalModel { Taal = taal.Taal, Niveau = taal.Niveau });
+                cvModels.Talen.Add(new Model.TaalModel { 
+                    Id = taal.Id,
+                    Taal = taal.Taal,
+                    Niveau = taal.Niveau });
             }
             foreach (var computervaardigheid in dbContext.computerVaardigheiden)
             {

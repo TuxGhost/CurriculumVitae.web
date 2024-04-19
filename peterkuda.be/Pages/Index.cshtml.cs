@@ -4,18 +4,14 @@ using CurriculumVitae.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MigraDoc.Rendering;
-using PdfSharp;
-using PdfSharp.Drawing;
-using PdfSharp.Pdf;
-using System.ComponentModel.DataAnnotations;
 
-namespace peterkuda.be.Pages;
+namespace CurriculumVitae.Web.Pages;
 
 public class IndexModel : PageModel
 {
     private readonly ILogger<IndexModel> _logger;
     private readonly ICvService cvService;
-    [BindProperty]
+    [BindProperty()] 
     public CvModel cv { get; private set; } = null!;
     [BindProperty]
     public TaalModel Taal { get; private set; } = null!;
@@ -31,8 +27,9 @@ public class IndexModel : PageModel
     public bool AddLanguage { get; set; } = false;
     [BindProperty]
     public bool AddComputerVaardigheid { get; set; } = false;
-
-
+    [BindProperty(SupportsGet = true)]
+    public string? Profiel { get; set; }
+    
     public IndexModel(ILogger<IndexModel> logger, ICvService cvService)
     {
         _logger = logger;
@@ -45,6 +42,7 @@ public class IndexModel : PageModel
         try
         {
             cv = this.cv;
+            this.Profiel = cv.Profiel;
         } catch(Exception ex)
         {
             _logger.LogError(ex.Message);            
@@ -58,7 +56,7 @@ public class IndexModel : PageModel
     public IActionResult OnPostEdit(string editable, string profiel)
     {
         //cv.Profiel = Request.Form["profiel"];
-
+        this.Profiel = cv.Profiel;
         if (Editable)
         {
             Editable = false;
@@ -74,7 +72,7 @@ public class IndexModel : PageModel
     {
         if (cv != null)
         {
-            cvService.SetProfiel(cv.Profiel!);
+            cvService.SetProfiel(Profiel!);            
         }
         return Page();
     }
@@ -184,5 +182,10 @@ public class IndexModel : PageModel
     {
         cvService.DeletePersonalSkill(personalSkill);
         return new OkResult();
+    }
+    public IActionResult OnPostRemoveItem(int id)
+    {        
+        cvService.DeleteLanguage(id);
+        return Page();
     }
 }

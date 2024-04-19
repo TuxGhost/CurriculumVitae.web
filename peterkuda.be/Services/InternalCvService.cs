@@ -20,22 +20,27 @@ public class InternalCvService : ICvService
             },
             Talen = new List<TaalModel> {
                 new TaalModel {
+                    Id = 1,
                     Taal = "Nederlands",
                     Niveau = "Moedertaal"
                 },
                 new TaalModel {
+                    Id = 2,
                     Taal = "Engels",
                     Niveau = "Zeer goed"
                 },
                 new TaalModel {
+                    Id = 3,
                     Taal = "Frans",
                     Niveau = "Basis"
                 },
                 new TaalModel {
+                    Id = 4,
                     Taal = "Duits",
                     Niveau = "Basis"
                 },
                 new TaalModel {
+                    Id = 5,
                     Taal = "Kroatisch",
                     Niveau = "Basis"
                 },

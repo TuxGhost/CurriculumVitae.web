@@ -1,0 +1,43 @@
+﻿
+@model List<CurriculumVitae.Model.TaalModel> 
+@{
+}
+<h1>Talen</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Taal</th>
+            <th scope="col">Lezen</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var taal in Model)
+        {
+            <tr>                
+                <td>@taal.Taal</td>
+                <td>@taal.Niveau</td>
+                <td>
+                    <form method="post" asp-page-handler="RemoveItem" >     
+                        <input type="hidden" name="id" value="@taal.Id" />
+                       <button type="submit"onclick="return confirm('are you sure');">
+                            <img src="~/Images/delete.png" />
+                       </button>
+                    </form>
+                </td>    
+            </tr>
+        }
+        <tr>
+        </tr>
+    </tbody>
+    <tfooter>
+    </tfooter>
+</table>
+
+
+
+@section Scripts {
+    <scripts>
+
+    </scripts>
+}
