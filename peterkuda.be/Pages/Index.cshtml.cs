@@ -18,7 +18,10 @@ public class IndexModel : PageModel
     [BindProperty]
     public ComputerVaardigheid ComputerVaardigheid { get; private set; } = null!;
     [BindProperty]
-    public WerkErvaring WerkErvaring { get; private set; } = null!;
+    public WerkErvaring WerkErvaring { get; private set; } = new WerkErvaring
+        { DatumVan = DateTime.Today , 
+         
+    };
     [BindProperty]
     public PersonalSkill persoonlijkeVaardigheid { get; private set; } = null!;
     [BindProperty]
