@@ -99,8 +99,8 @@
         @foreach (var lijn in Model.cv.Lijnen)
         {
             <p>@lijn</p>
-        }       
-        <partial name="_Talen"  model="@Model.cv.Talen"  />
+        }
+        <partial name="_Talen" model="@Model.cv.Talen" />
         <form method="post" asp-page-handler="Addlanguage" id="frmNieuwtaal">
             <button id="btnNieuwtaal" onclick="setNieuwetaalIngave" type="submit" class="btn btn-outline-primary">Nieuwe taal</button>
             <input type="checkbox" asp-for="Editable" hidden />
@@ -109,7 +109,7 @@
             {
                 <td><input type="text" asp-for="Taal.Taal" id="taal" /></td>
                 <td><input type="text" asp-for="Taal.Niveau" id="niveau" /></td>
-                <input type="checkbox" asp-for="Taal.AddData" id="toevoegen"  checked hidden/>
+                <input type="checkbox" asp-for="Taal.AddData" id="toevoegen" checked hidden />
                 <span asp-validation-for="Taal.Taal"></span>
                 <span asp-validation-for="Taal.Niveau"></span>
             }
@@ -144,6 +144,14 @@
                     <tr>
                         <td>@vaardigheid.Omschrijving</td>
                         <td>@vaardigheid.Niveau</td>
+                        <td>
+                            <form method="post" asp-page-handler="Deletecomputerskill">
+                                <input type="hidden" name="id" value="@vaardigheid.Id" />
+                                <button type="submit" onclick="return confirm('are you sure');">
+                                    <img src="~/Images/delete.png" />
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 }
             </tbody>
@@ -154,13 +162,13 @@
         <form method="post" asp-page-handler="Addcomputerskill">
             <button type="submit" class="btn btn-outline-primary">Nieuwe computervaardigheid</button>
             <input type="checkbox" asp-for="Editable" hidden />
-            <input type="checkbox" asp-for="AddComputerVaardigheid"  hidden/>
+            <input type="checkbox" asp-for="AddComputerVaardigheid" hidden />
             @if (Model.AddComputerVaardigheid == true)
             {
                 <input id="vaardigheidcomputeromschrijving" asp-for="ComputerVaardigheid.Omschrijving" type="text" />
                 <input id="vaardigheidcomputerniveau" type="text" asp-for="ComputerVaardigheid.Niveau" />
                 <input id="toevoegen" type="checkbox" asp-for="ComputerVaardigheid.AddData" checked />
-            }           
+            }
         </form>
 
         <h1>Werkervaring</h1>
@@ -229,9 +237,9 @@
                         body: JSON.stringify({ Name: vaardigheidnaam, Enabled: isChecked })
                     });
                 });
-            });           
+            });
         });
-        RemovePersonalSkill = function (value , element) {
+        RemovePersonalSkill = function (value, element) {
             console.log('vaardigheid');
             console.log(value);
             console.log(element);
@@ -242,8 +250,8 @@
                     'Content-Type': 'application/json',
                     'RequestVerificationToken': verificationToken
                 },
-                body: JSON.stringify({ Name: value , Enabled: true})
-            });            
+                body: JSON.stringify({ Name: value, Enabled: true })
+            });
         }
     </script>
 }

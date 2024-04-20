@@ -14,7 +14,7 @@ public interface ICvService
     public void DeleteLanguage(int id);
     public void DeleteWorkExpercience(int id);
     public void DeleteWorkExperienceTask(int workexperienceId, string taak);
-    public void DeleteComputerServices(int id);
+    public void DeleteComputerSkill(int id);
     public void AddPersonalSkill(Data.Entities.PersoonlijkeVaardigheid vaardigheid);
     public void DeletePersonalSkillTask(int id);
     public void UpdatePersonalSkill(Data.Entities.PersoonlijkeVaardigheid vaardigheid);

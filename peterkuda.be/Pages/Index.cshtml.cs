@@ -93,6 +93,11 @@ public class IndexModel : PageModel
         }        
         return Page();
     }
+    /// <summary>
+    /// Add new computer skill after posting
+    /// </summary>
+    /// <param name="computervaardigheid"></param>
+    /// <returns></returns>
     public IActionResult OnPostAddcomputerskill(ComputerVaardigheid computervaardigheid)
     {
         if(!AddComputerVaardigheid && !computervaardigheid.AddData)
@@ -109,6 +114,16 @@ public class IndexModel : PageModel
                 Omschrijving = computervaardigheid.Omschrijving
             });
         }        
+        return Page();
+    }
+    /// <summary>
+    /// Remove computer skill from list
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public IActionResult OnPostDeletecomputerskill(int id)
+    {        
+        cvService.DeleteComputerSkill(id);                
         return Page();
     }
     public IActionResult OnPostAddWorkExperience(WerkErvaring werkervaring)

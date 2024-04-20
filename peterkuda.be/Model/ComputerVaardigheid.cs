@@ -4,6 +4,7 @@ namespace CurriculumVitae.Model;
 
 public class ComputerVaardigheid
 {        
+    public int Id { get; set; }
     public string Omschrijving { get; set; } = null!;
     public string Niveau { get; set; } = null!; 
     public string Category { get; set; } = null!;

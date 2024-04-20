@@ -37,6 +37,7 @@ public class SQLiteCvService : ICvService
             {
                 cvModels.ComputerVaardigheden.Add(new Model.ComputerVaardigheid
                 {
+                    Id = computervaardigheid.Id,
                     Category = computervaardigheid.Category,
                     Niveau = computervaardigheid.Niveau,
                     Omschrijving = computervaardigheid.Omschrijving
@@ -136,7 +137,7 @@ public class SQLiteCvService : ICvService
         }
     }
 
-    public void DeleteComputerServices(int id)
+    public void DeleteComputerSkill(int id)
     {
         var computerServices = dbContext.computerVaardigheiden.Find(id);
         if (computerServices != null)

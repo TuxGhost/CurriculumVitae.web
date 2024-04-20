@@ -229,7 +229,7 @@ public class InternalCvService : ICvService
         throw new NotImplementedException();
     }
 
-    public void DeleteComputerServices(int id)
+    public void DeleteComputerSkill(int id)
     {
         throw new NotImplementedException();
     }
