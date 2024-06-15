@@ -13,7 +13,7 @@ public class CVDbContext : DbContext
     private IConfiguration _configuration = null!;
     public CVDbContext() { }
     public CVDbContext(DbContextOptions<CVDbContext> options) : base(options) { }    
-    public DbSet<Computervaardigheid> computerVaardigheiden { get; set; } = null!;
+    public DbSet<Computervaardigheid> ComputerVaardigheden { get; set; } = null!;
     public DbSet<Profiel> Profielen {  get; set; } = null!; 
     public DbSet<Taal> Talen { get; set; } = null!;
     public DbSet<WerkErvaring> WerkErvaringen { get; set; } = null!;
