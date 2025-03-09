@@ -72,9 +72,21 @@
         <h1>Werkervaring</h1>
         @foreach (var werkervaring in Model.cv.WerkErvaringen)
         {
-            <h5>
-                @werkervaring.Functie - @werkervaring.Bedrijf @werkervaring.DatumVan.ToString("MM/yyyy") - @werkervaring.DatumTot.ToString("MM/yyyy")
-            </h5>
+            
+                @if(werkervaring.DatumTot < DateTime.Now)
+                {
+                <h5>                    
+                    test
+                    @werkervaring.Functie - @werkervaring.Bedrijf @werkervaring.DatumVan.ToString("MM/yyyy") - @werkervaring.DatumTot.ToString("MM/yyyy")
+                </h5>
+                } else {
+                <h5>
+                    
+                    @werkervaring.Functie - @werkervaring.Bedrijf @werkervaring.DatumVan.ToString("MM/yyyy") - ...
+                </h5>
+                }
+                
+            
             @if (werkervaring.Taken != null)
             {
                 <ul>
@@ -211,7 +223,8 @@
                 <label for="bedrijf"><input id="werkervaringbedrijf" type="text" asp-for="WerkErvaring.Bedrijf" /></label>
                 <label for="functie"><input id="werkervaringfunctie" type="text" asp-for="WerkErvaring.Functie" />Functie:</label>
                 <label for="datumvan"><input id="werkervaringdatumvan" type="date" asp-for="WerkErvaring.DatumVan" />Van:</label>
-                <label for="datumtot"><input id="werkervaringdatumtot" type="date" asp-for="WerkErvaring.DatumTot" />Tot:</label>
+                <label for="datumtot"><input id="werkervaringdatumtot" type="date"  asp-for="WerkErvaring.DatumTot" />Tot:</label>
+                <span asp-validation-for="WerkErvaring.DatumTot" class="danger"></span>
                 <input type="checkbox" asp-for="Editable" hidden />
                 <button type="submit" class="btn btn-outline-primary">Toevoegen werkervaring</button>
             </div>
