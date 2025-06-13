@@ -31,7 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CurriculumVitaeRepository\CurriculumVitaeRepository.csproj" />
+    <ProjectReference Include="..\..\CurriculumVitae.API\CurriculumVitae.API.csproj" />
   </ItemGroup>
 
 </Project>

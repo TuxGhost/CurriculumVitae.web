@@ -86,8 +86,14 @@ public class CVDocument
         paragraph.AddLineBreak();
         foreach (var item in ervaring)
         {
-            paragraph.AddFormattedText($"{item.Bedrijf} - {item.Functie} - {item.DatumVan.ToShortDateString()} - {item.DatumTot.ToShortDateString()}");
-            paragraph.AddLineBreak();
+            if (item.DatumTot != null)
+            {
+                paragraph.AddFormattedText($"{item.Bedrijf} - {item.Functie} - {item.DatumVan.ToShortDateString()} - {item.DatumTot?.ToShortDateString()}");
+            } else
+            {
+                paragraph.AddFormattedText($"{item.Bedrijf} - {item.Functie} - {item.DatumVan.ToShortDateString()} - ...");
+            }
+                paragraph.AddLineBreak();
             foreach(var taak in item.Taken)
             {
                 paragraph.AddFormattedText($"\t{taak}");
