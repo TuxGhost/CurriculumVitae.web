@@ -25,10 +25,16 @@ public class CVDocument
         style.Font.Name = "Arial";        
         var section = document.AddSection();
         var paragraph = section.AddParagraph();
-        if(model.Profiel != null)
+        
+        String dir = AppContext.BaseDirectory;
+        string filename = dir + "wwwroot\\Images\\Selfie.jpg";        
+        paragraph.AddImage(filename).Width = "5cm";
+        paragraph.AddLineBreak();
+        if (model.Profiel != null)
             paragraph.AddFormattedText(model.Profiel);
         paragraph.AddLineBreak();
         paragraph.AddLineBreak();
+        
         var paragraphTalen = section.AddParagraph();
         SetTaalText(ref paragraphTalen,model.Talen.ToArray());
         var paragraphPersonalSkills = section.AddParagraph();

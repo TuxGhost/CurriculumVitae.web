@@ -2,6 +2,7 @@
   "profiles": {
     "peterkuda.be": {
       "commandName": "Project",
+      "commandLineArgs": "--framework net8.0",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -11,6 +12,7 @@
     },
     "peterkuda.be.PRD": {
       "commandName": "Project",
+      "commandLineArgs": "--framework net8.0",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Production"
@@ -41,6 +43,16 @@
         "ASPNETCORE_URLS": "https://localhost:7255;http://localhost:5208"
       },
       "distributionName": ""
+    },
+    "peterkuda.be - NET 9": {
+      "commandName": "Project",
+      "commandLineArgs": "--framework net9.0",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:5208"
     }
   },
   "iisSettings": {
