@@ -53,6 +53,16 @@
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5208"
+    },
+    "peterkuda.be-NET10": {
+      "commandName": "Project",
+      "commandLineArgs": "--framework net10.0",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:5208"
     }
   },
   "iisSettings": {

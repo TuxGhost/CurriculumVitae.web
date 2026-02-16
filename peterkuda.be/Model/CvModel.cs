@@ -11,4 +11,14 @@ public class CvModel
     public List<PersonalSkill> PersonalSkills { get; set; } = new List<PersonalSkill> ();
     public List<ComputerVaardigheid> ComputerVaardigheden { get; set; } = new List<ComputerVaardigheid>();
     public List<WerkErvaring> WerkErvaringen { get; set; } = new List<WerkErvaring>();
+    // Calculate total workdays
+    public int getWorkingDays()
+    {
+        int dagen = 0;
+        foreach(var werkErvaring in WerkErvaringen)
+        {
+            dagen += werkErvaring.getDagen();
+        }
+        return dagen;
+    }
 }

@@ -73,17 +73,22 @@
         @foreach (var werkervaring in Model.cv.WerkErvaringen)
         {
             
-                @if(werkervaring.DatumTot < DateTime.Now)
-                {
-                <h5>                                        
-                    @werkervaring.Functie - @werkervaring.Bedrijf @werkervaring.DatumVan.ToString("MM/yyyy") - @werkervaring.DatumTot?.ToString("MM/yyyy")
-                </h5>
-                } else {
-                <h5>
+            @if(werkervaring.DatumTot < DateTime.Now)
+            {
+            <h5>                                        
+                @werkervaring.Functie - @werkervaring.Bedrijf @werkervaring.DatumVan.ToString("MM/yyyy") - @werkervaring.DatumTot?.ToString("MM/yyyy")
+            </h5>
+            } else {
+            <h5>
                     
-                    @werkervaring.Functie - @werkervaring.Bedrijf @werkervaring.DatumVan.ToString("MM/yyyy") - ...
-                </h5>
-                }
+                @werkervaring.Functie - @werkervaring.Bedrijf @werkervaring.DatumVan.ToString("MM/yyyy") - ...
+            </h5>
+            }
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <p>@(werkervaring.getDagen()/7*5)</p>
+            }
+            
                 
             
             @if (werkervaring.Taken != null)
@@ -94,7 +99,11 @@
                         <li>@taak</li>
                     }
                 </ul>
-            }
+            }           
+        }
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <p>Totaal aantal dagen @Model.cv.getWorkingDays()</p>
         }
     }
     else
@@ -267,3 +276,4 @@
         }
     </script>
 }
+

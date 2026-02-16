@@ -7,6 +7,7 @@ using CurriculumVitae.Data;
 using Microsoft.AspNetCore.Identity;
 using System.Net.Mail;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using CurriculumVitae.common.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -32,8 +33,9 @@ if (databaseService == true)
     builder.Services.AddScoped<ICvService,SQLiteCvService>();
 } else
     builder.Services.AddTransient<ICvService, InternalCvService>();
-
+builder.Services.AddScoped<ICurriculumVitaeServices, CurriculumVitaeServices>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
+
 
 //Translations
 builder.Services.Configure<RequestLocalizationOptions>(options =>
@@ -48,6 +50,7 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 }
 );
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+
 
 
 var app = builder.Build();
@@ -78,6 +81,9 @@ using (var scope = app.Services.CreateScope())
     var cvDbContext = scope.ServiceProvider.GetRequiredService<CurriculumVitaeDbContext>();
     var r2 = cvDbContext.Database.EnsureCreated();
     cvDbContext.Database.Migrate();
+    var cvDbContext2 = scope.ServiceProvider.GetRequiredService<CVDbContext>();
+    var r3 = cvDbContext2.Database.EnsureCreated();
+    cvDbContext2.Database.Migrate();
 }
 
 app.Run();

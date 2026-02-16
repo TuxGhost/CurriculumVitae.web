@@ -1,0 +1,12 @@
+{
+  "name": "my-ui5-app",
+  "version": "0.1.0",
+  "description": "Talen oefenen in UI5",
+  "scripts": {
+    "start": "ui5 serve"
+  },
+  "devDependencies": {
+    "@ui5/cli": "^4.0.43",
+    "ui5-middleware-simpleproxy": "^3.6.2"
+  }
+}

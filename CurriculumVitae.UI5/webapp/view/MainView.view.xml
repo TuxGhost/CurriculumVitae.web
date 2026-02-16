@@ -1,0 +1,16 @@
+<mvc:View
+  controllerName="my.ui5.app.controller.MainView"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m">
+  <App>
+    <Page title="Curriculum Vitae">
+      <content>
+        <Text text="cv"/>
+        <List items="{/}">
+          <StandardListItem title="{nederlands}"
+                            description="{frans}" />
+        </List>
+      </content>
+    </Page>
+  </App>
+</mvc:View>
