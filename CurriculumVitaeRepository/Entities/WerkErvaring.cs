@@ -10,7 +10,7 @@ public class WerkErvaring
     public required string Functie { get; set; } 
     public required string Bedrijf { get; set; } 
     public required DateTime DatumVan { get;set; } 
-    public DateTime DatumTot { get; set; }
+    public DateTime? DatumTot { get; set; }
     public List<Taak> Taken { get; set; } = null!; 
 
 }

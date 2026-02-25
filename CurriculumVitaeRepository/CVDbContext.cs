@@ -18,6 +18,7 @@ public class CVDbContext : DbContext
     public DbSet<Taal> Talen { get; set; } = null!;
     public DbSet<WerkErvaring> WerkErvaringen { get; set; } = null!;
     public DbSet<Persoonlijkevaardigheid> Persoonlijkevaardigheden { get; set; } = null!;
+    public DbSet<Taak> Taken { get; set; } = null!;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

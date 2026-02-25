@@ -92,7 +92,7 @@ namespace CurriculumVitaeRepository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Bechrijving")
+                    b.Property<string>("Beschrijving")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -140,7 +140,7 @@ namespace CurriculumVitaeRepository.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("DatumTot")
+                    b.Property<DateTime?>("DatumTot")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("DatumVan")

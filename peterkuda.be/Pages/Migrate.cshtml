@@ -1,0 +1,13 @@
+﻿@page
+@model CurriculumVitae.Web.Pages.MigrationModel
+
+@{
+}
+
+<form asp-page-handler="migrate" method="post">
+    <div>
+        <button>Migreer data</button>       
+        <div>@Model.MigrationMessage</div>
+    </div>
+    
+</form>

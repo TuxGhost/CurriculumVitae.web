@@ -1,15 +1,34 @@
 <mvc:View
   controllerName="my.ui5.app.controller.MainView"
   xmlns:mvc="sap.ui.core.mvc"
-  xmlns="sap.m">
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core">
   <App>
     <Page title="Curriculum Vitae">
       <content>
-        <Text text="cv"/>
-        <List items="{/}">
-          <StandardListItem title="{nederlands}"
-                            description="{frans}" />
-        </List>
+        <Text text="cv"/>       
+        <Table items="{/}">
+          <columns>
+            <Column>
+              <Text text="ID"></Text>
+            </Column>    
+            <Column>
+              <Text text="BESCHRIJVING"></Text>
+            </Column>      
+          </columns>
+          <items>
+            <ColumnListItem>
+              <cells>
+                <Text text="{id}"/>
+              </cells>
+              <cells>
+                <Text text="{beschrijving}"/>
+              </cells>
+            </ColumnListItem>             
+          </items>
+
+        </Table>
+                
       </content>
     </Page>
   </App>

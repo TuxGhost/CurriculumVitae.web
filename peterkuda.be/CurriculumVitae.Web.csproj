@@ -62,6 +62,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CurriculumVitae.API\CurriculumVitae.API.csproj" />
+    <ProjectReference Include="..\CurriculumVitaeRepository\CurriculumVitaeRepository.csproj" />
   </ItemGroup>
 
   <ItemGroup>

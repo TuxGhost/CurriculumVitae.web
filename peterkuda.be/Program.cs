@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Net.Mail;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using CurriculumVitae.common.Services;
+using CurriculumVitae.Web.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -19,7 +20,8 @@ builder.Services.AddDbContext<CVDbContext>(options =>
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
-
+builder.Services.AddScoped<ICurriculumVitaeServices, CurriculumVitaeServices>();
+builder.Services.AddScoped<dbMaintenance>();
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
@@ -33,7 +35,7 @@ if (databaseService == true)
     builder.Services.AddScoped<ICvService,SQLiteCvService>();
 } else
     builder.Services.AddTransient<ICvService, InternalCvService>();
-builder.Services.AddScoped<ICurriculumVitaeServices, CurriculumVitaeServices>();
+
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 
@@ -54,7 +56,7 @@ builder.Services.AddLocalization(options => options.ResourcesPath = "Resources")
 
 
 var app = builder.Build();
-
+app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -78,9 +80,11 @@ using (var scope = app.Services.CreateScope())
 {
     var applicationDbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     var r1 = applicationDbContext.Database.EnsureCreated();
+    // Update dutch database names
     var cvDbContext = scope.ServiceProvider.GetRequiredService<CurriculumVitaeDbContext>();
     var r2 = cvDbContext.Database.EnsureCreated();
     cvDbContext.Database.Migrate();
+    // Update english database names
     var cvDbContext2 = scope.ServiceProvider.GetRequiredService<CVDbContext>();
     var r3 = cvDbContext2.Database.EnsureCreated();
     cvDbContext2.Database.Migrate();

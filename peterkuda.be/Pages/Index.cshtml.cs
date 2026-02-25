@@ -4,6 +4,7 @@ using CurriculumVitae.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MigraDoc.Rendering;
+using CurriculumVitae.common.Services;
 
 namespace CurriculumVitae.Web.Pages;
 
@@ -11,6 +12,8 @@ public class IndexModel : PageModel
 {
     private readonly ILogger<IndexModel> _logger;
     private readonly ICvService cvService;
+    private readonly ICurriculumVitaeServices curriculumVitaeServices;
+    
     [BindProperty()] 
     public CvModel cv { get; private set; } = null!;
     [BindProperty]
@@ -76,6 +79,7 @@ public class IndexModel : PageModel
         if (cv != null)
         {
             cvService.SetProfiel(Profiel!);            
+            //curriculumVitaeServices.UpdateProfile()
         }
         return Page();
     }
