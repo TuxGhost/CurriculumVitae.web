@@ -192,12 +192,21 @@
         </form>
 
         <h1>Werkervaring</h1>
-        @foreach (var werkervaring in Model.cv.WerkErvaringen)
+        @foreach (var werkervaring in Model.cv.WerkErvaringen.OrderByDescending(d => d.DatumVan ))
         {
             <h5>
-                <form method="post" asp-page-handler="DeleteWorkExperience">
-                    @werkervaring.Functie - @werkervaring.Bedrijf @werkervaring.DatumVan.ToString("MM/yyyy") - @werkervaring.DatumTot?.ToString("MM/yyyy") 
+                @werkervaring.Functie - @werkervaring.Bedrijf @werkervaring.DatumVan.ToString("MM/yyyy") - @werkervaring.DatumTot?.ToString("MM/yyyy")
+                <form method="post" asp-page-handler="EditWorkExperience">
                     <input id="id" type="hidden" name="id" value="@werkervaring.Id" />
+                    <input id="functie" type="hidden" name="functie" value="@werkervaring.Functie" />
+                    <input id="bedrijf" type="hidden" name="bedrijf" value="@werkervaring.Bedrijf" />
+                    <input id="datumvan" type="hidden" name="datumvan" value="@werkervaring.DatumVan" />
+                    <input id="datumtot" type="datetime" name="datumtot" value="@werkervaring.DatumTot" />
+                    <li><button type="submit" class="btn btn-outline-primary">Werkervaring bewaren</button></li>
+                    <input type="checkbox" asp-for="Editable" hidden />
+                </form>
+                <form method="post" asp-page-handler="DeleteWorkExperience">                    
+                    <input id="id" type="hidden" name="id" value="@werkervaring.Id" />                    
                     <li><button type="submit" class="btn btn-outline-primary">Verwijderen</button></li>
                     <input type="checkbox" asp-for="Editable" hidden />
                 </form>

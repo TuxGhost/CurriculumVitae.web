@@ -12,6 +12,7 @@ public interface ICvService
     public void AddWorkExperienceTask(int id, string taak);
     public void AddComputerServices(Data.Entities.ComputerVaardigheid computerVaardigheid);
     public void DeleteLanguage(int id);
+    public void UpdateWorkExperience(Data.Entities.WerkErvaring werkervaring);
     public void DeleteWorkExpercience(int id);
     public void DeleteWorkExperienceTask(int workexperienceId, string taak);
     public void DeleteComputerSkill(int id);

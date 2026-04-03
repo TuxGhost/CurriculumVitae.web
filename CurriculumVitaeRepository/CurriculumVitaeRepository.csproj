@@ -8,21 +8,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <None Update="appsettings.Development.json" >
+	  <None Update="appsettings.Development.json2">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="appsettings.json" >
+	  <None Update="appsettings.json2">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="appsettings.json">
+    <Content Include="appsettings.json2">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="appsettings.Development.json">
+    <Content Include="appsettings.Development.json2">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>

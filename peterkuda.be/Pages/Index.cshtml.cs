@@ -144,6 +144,18 @@ public class IndexModel : PageModel
         });
         return Page();
     }
+    public IActionResult OnPostEditWorkExperience(WerkErvaring werkErvaring)
+    {
+        cvService.UpdateWorkExperience(new CurriculumVitae.Data.Entities.WerkErvaring
+        {
+            Id = werkErvaring.Id,
+            Bedrijf = werkErvaring.Bedrijf,
+            Functie = werkErvaring.Functie,
+            DatumVan = werkErvaring.DatumVan,
+            DatumTot = werkErvaring.DatumTot
+        });
+        return Page();
+    }
     public IActionResult OnPostAddWorkExperienceTask(int id, string taak)
     {
         cvService.AddWorkExperienceTask(id, taak);

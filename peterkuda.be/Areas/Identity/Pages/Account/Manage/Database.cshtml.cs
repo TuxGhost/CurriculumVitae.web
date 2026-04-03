@@ -4,6 +4,7 @@
 
 using System.ComponentModel.DataAnnotations;
 using CurriculumVitae.Data;
+using CurriculumVitae.Web.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -16,17 +17,21 @@ namespace CurriculumVitae.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly CVDbContext _cvDbContext;
+        private readonly dbMaintenance _dbMaintenance;
         // public variable
         [BindProperty]
         public bool CanBeMigrated { get; set; } = false;
         public DatabaseModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
-            CVDbContext cVDbContext)
+            CVDbContext cVDbContext,
+            dbMaintenance dbMaintenance
+            )
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _cvDbContext = cVDbContext;          
+            _cvDbContext = cVDbContext;
+            _dbMaintenance = dbMaintenance;
         }
 
         /// <summary>
@@ -83,8 +88,9 @@ namespace CurriculumVitae.Areas.Identity.Pages.Account.Manage
                 {
                     CanBeMigrated = true;
                     StatusMessage = "Database up to date";
-                }else
-                    CanBeMigrated= true;                                
+                }
+                else
+                    CanBeMigrated = true;
             }
             catch (Exception ex)
             {
@@ -120,6 +126,79 @@ namespace CurriculumVitae.Areas.Identity.Pages.Account.Manage
             }
             await _cvDbContext.Database.MigrateAsync();
             StatusMessage = "your database has been updated";
+            return RedirectToPage();
+        }
+        public async Task<IActionResult> OnPostMigrateAsync()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+            await _dbMaintenance.copyFromDatabase();
+            StatusMessage = "your database has been updated";
+            return RedirectToPage();
+        }
+        public async Task<IActionResult> OnPostDeleteAsync()
+        {
+            /*var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+            await _cvDbContext.Database.EnsureDeletedAsync();
+            StatusMessage = "your database has been deleted";*/
+            throw new NotImplementedException("Deleting the database is not implemented");
+            //return RedirectToPage();
+
+        }
+        public async Task<IActionResult> OnPostCreateAsync()
+        {
+            /*var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+            await _cvDbContext.Database.EnsureCreatedAsync();
+            StatusMessage = "your database has been created";*/
+            throw new NotImplementedException("Creating the database is not implemented");
+            //return RedirectToPage();
+        }
+        public async Task<IActionResult> OnPostDropAsync()
+        {
+            /*var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+            await _cvDbContext.Database.EnsureDeletedAsync();
+            StatusMessage = "your database has been dropped";*/
+            throw new NotImplementedException("Dropping the database is not implemented");
+            //return RedirectToPage();
+        }
+        public async Task<IActionResult> OnPostUpdateAsync()
+        {
+            /*var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+            await _cvDbContext.Database.MigrateAsync();
+            StatusMessage = "your database has been updated";*/
+            throw new NotImplementedException("Updating the database is not implemented");
+            //return RedirectToPage();
+        }
+        public async Task<IActionResult> OnPostCopydatabaseAsync()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+            // Seed the database with initial data
+            await _dbMaintenance.copyFromDatabase();
+            StatusMessage = "your database has been copied";
+
             return RedirectToPage();
         }
     }

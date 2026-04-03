@@ -273,4 +273,9 @@ public class InternalCvService : ICvService
     {
         throw new NotImplementedException();
     }
+
+    void ICvService.UpdateWorkExperience(Data.Entities.WerkErvaring werkervaring)
+    {
+        throw new NotImplementedException();
+    }
 }

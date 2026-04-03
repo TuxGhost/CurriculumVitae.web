@@ -11,7 +11,10 @@
     <div class="col-md-6">
         <form id="database-form" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="d-grid gap-5">
             <button id="migrate-database-button" type="submit" disabled="@Model.CanBeMigrated" class="w-100 btn btn-lg btn-primary">Migrate</button>
+            <button id="copy-database-button" type="submit" asp-page-handler="Copydatabase" class="w-100 btn btn-sm btn-secondary margin-">Copy</button>
+            </div>
         </form>
     </div>
 </div>

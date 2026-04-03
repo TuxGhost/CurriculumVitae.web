@@ -43,7 +43,7 @@ public class SQLiteCvService : ICvService
                     Omschrijving = computervaardigheid.Omschrijving
                 });
             }
-            foreach (var werkervaring in dbContext.WerkErvaringen.Include(t => t.Taken))
+            foreach (var werkervaring in dbContext.WerkErvaringen.Include(t => t.Taken).OrderByDescending(key => key.DatumVan))
             {
                 List<string> taken = new();
                 if (werkervaring.Taken != null)
@@ -77,7 +77,7 @@ public class SQLiteCvService : ICvService
         cvModels.PersoonlijkeVaardigheden.Add("Analytisch");
         cvModels.PersoonlijkeVaardigheden.Add("Klantgerichtheid");
         cvModels.PersoonlijkeVaardigheden.Add("Leervermogen");
-        cvModels.PersoonlijkeVaardigheden.Add("Onafhankelijk");
+        cvModels.PersoonlijkeVaardigheden.Add("Onafhankelijk");        
         return cvModels;
     }
 
@@ -126,7 +126,22 @@ public class SQLiteCvService : ICvService
             dbContext.SaveChanges();
         }
     }
-
+    public void UpdateWorkExperience(Data.Entities.WerkErvaring werkervaring)
+    {
+        if(werkervaring.Id != 0)
+        {
+            var existing = dbContext.WerkErvaringen.FirstOrDefault(r => r.Id == werkervaring.Id);
+            if (existing != null)
+            {
+                //existing.Bedrijf = werkervaring.Bedrijf;
+                //existing.DatumVan = werkervaring.DatumVan;
+                existing.DatumTot = werkervaring.DatumTot;
+                //existing.Functie = werkervaring.Functie;                                    
+                dbContext.SaveChanges();
+            }
+            //dbContext.WerkErvaringen.Update(werkervaring);            
+        }
+    }
     public void DeleteWorkExpercience(int id)
     {
         var workexperience = dbContext.WerkErvaringen.Find(id);

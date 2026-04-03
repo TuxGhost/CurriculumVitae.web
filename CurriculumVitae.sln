@@ -8,6 +8,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurriculumVitaeRepository", "CurriculumVitaeRepository\CurriculumVitaeRepository.csproj", "{2B9C0729-BFEB-46FC-9B7F-453C00A2F7F8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DF456509-8F11-4410-BFEE-D165F8999270}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9FAC075E-6FF6-4CF0-9744-DBE4BB77B388}"
 EndProject
