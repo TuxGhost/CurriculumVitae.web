@@ -22,6 +22,9 @@ builder.Services.AddDbContext<CVDbContext>(options =>
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddScoped<ICurriculumVitaeServices, CurriculumVitaeServices>();
+builder.Services.AddScoped<ICurriculumVitaeService, CurriculumVitaeService>();
+builder.Services.AddScoped<IJobApplicationService, JobApplicationService>();
+builder.Services.AddScoped<INetworkService, NetworkService>();
 builder.Services.AddScoped<dbMaintenance>();
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -80,6 +83,7 @@ app.MapRazorPages();
 app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
+    try { 
     var applicationDbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     var r1 = applicationDbContext.Database.EnsureCreated();
     // Update dutch database names
@@ -90,6 +94,10 @@ using (var scope = app.Services.CreateScope())
     var cvDbContext2 = scope.ServiceProvider.GetRequiredService<CVDbContext>();
     var r3 = cvDbContext2.Database.EnsureCreated();
     cvDbContext2.Database.Migrate();
+    } catch(Exception ex)
+    {
+        Console.Write(ex.ToString());
+    }
 }
 
 app.Run();

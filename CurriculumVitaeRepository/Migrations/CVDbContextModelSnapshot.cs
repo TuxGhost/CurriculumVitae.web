@@ -15,7 +15,7 @@ namespace CurriculumVitaeRepository.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.19");
+            modelBuilder.HasAnnotation("ProductVersion", "8.0.23");
 
             modelBuilder.Entity("CurriculumVitaeRepository.Entities.Computervaardigheid", b =>
                 {
@@ -43,6 +43,69 @@ namespace CurriculumVitaeRepository.Migrations
                     b.HasIndex("ProfielId");
 
                     b.ToTable("ComputerSkills", (string)null);
+                });
+
+            modelBuilder.Entity("CurriculumVitaeRepository.Entities.JobApplication", b =>
+                {
+                    b.Property<uint>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateOnly>("ApplicationDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Function")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<uint>("ProfielId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProfielId");
+
+                    b.ToTable("JobApplications", (string)null);
+                });
+
+            modelBuilder.Entity("CurriculumVitaeRepository.Entities.Network", b =>
+                {
+                    b.Property<uint>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Company")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Function")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Lastname")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("NetworkType")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<uint>("ProfielId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProfielId");
+
+                    b.ToTable("Network", (string)null);
                 });
 
             modelBuilder.Entity("CurriculumVitaeRepository.Entities.Persoonlijkevaardigheid", b =>
@@ -161,6 +224,28 @@ namespace CurriculumVitaeRepository.Migrations
                 });
 
             modelBuilder.Entity("CurriculumVitaeRepository.Entities.Computervaardigheid", b =>
+                {
+                    b.HasOne("CurriculumVitaeRepository.Entities.Profiel", "Profiel")
+                        .WithMany()
+                        .HasForeignKey("ProfielId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Profiel");
+                });
+
+            modelBuilder.Entity("CurriculumVitaeRepository.Entities.JobApplication", b =>
+                {
+                    b.HasOne("CurriculumVitaeRepository.Entities.Profiel", "Profiel")
+                        .WithMany()
+                        .HasForeignKey("ProfielId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Profiel");
+                });
+
+            modelBuilder.Entity("CurriculumVitaeRepository.Entities.Network", b =>
                 {
                     b.HasOne("CurriculumVitaeRepository.Entities.Profiel", "Profiel")
                         .WithMany()

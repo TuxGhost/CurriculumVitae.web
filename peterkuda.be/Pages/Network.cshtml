@@ -1,0 +1,72 @@
+﻿@page
+@model NetworkModel
+@attribute [Authorize]
+
+<h1>Network</h1>
+@if(Model.Networks == null || Model.Networks.Count == 0)
+{
+    <p>No contacts</p>
+}
+else
+{
+    <table class="table"    >
+        <thead>
+            <tr>
+                <th scope="col">Naam</th>
+                <th scope="col">Functie</th>
+                <th scope="col">Bedrijf</th>
+                <th scope="col">Netwerktype</th>
+                <th scope="col">Acties</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model.Networks)    
+            {
+                <tr>
+                    @if(Model.IdChange == item.Id)
+                    {
+                        <form method="post" asp-page-handler="Update">
+                            <td><input type="text" name="Lastname" value="@item.Lastname" required /></td>
+                            <td><input type="text" name="Function" value="@item.Function" required /></td>
+                            <td><input type="text" name="Company" value="@item.Company" required /></td>
+                            <td><input type="text" name="NetworkType" value="@item.NetworkType" /></td>
+                            <td>
+                                <input type="hidden" name="Id" value="@item.Id" />
+                                <button type="submit" asp-page-handler="Update" class="btn btn-primary">Opslaan</button>
+                            </td>
+                        </form>
+                    } else {
+                            <td>@item.Lastname</td>
+                            <td>@item.Function</td>
+                            <td>@item.Company</td>
+                            <td>@item.NetworkType</td>
+                            <td>
+                                <form method="post">
+                                    <button type="submit" asp-page-handler="Edit" asp-route-id="@item.Id" class="btn btn-primary">Bewerken</button>
+                                    <button type="submit" asp-page-handler="Delete" asp-route-id="@item.Id" class="btn btn-danger">Verwijderen</button>
+                                </form>
+                            </td>
+                        }
+                </tr>
+            }
+    </table>
+}
+@if(!Model.IsAddingMode){
+        <form method="post" asp-page-handler="Addrequest">
+                <button type="submit" class="btn btn-primary">Nieuw contact toevoegen</button>    
+            </form>
+} else {            
+            <form method="post"  asp-page-handler="Add">
+                <input type="text" name="Function" placeholder="Functie" required />
+                <input type="text" name="Lastname" placeholder="Achternaam" required />
+                <input type="text" name="Function" placeholder="Functie" required />
+                <input type="text" name="Company" placeholder="Bedrijf" required />
+                <input type="text" name="NetworkType" placeholder="Netwerktype" />                
+                <button type="submit">Toevoegen</button>
+            </form>            
+}       
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}

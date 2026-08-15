@@ -10,7 +10,7 @@ sap.ui.define([
             console.log("Controller geladen");
             var oModel = new JSONModel();            
             console.log(oModel);
-            oModel.loadData("http://localhost:5208/CurriculumVitae/all")
+            oModel.loadData("http://localhost:5208/CurriculumVitae/current")
             this.getView().setModel(oModel);
         },
 

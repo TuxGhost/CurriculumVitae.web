@@ -19,6 +19,8 @@ public class CVDbContext : DbContext
     public DbSet<WerkErvaring> WerkErvaringen { get; set; } = null!;
     public DbSet<Persoonlijkevaardigheid> Persoonlijkevaardigheden { get; set; } = null!;
     public DbSet<Taak> Taken { get; set; } = null!;
+    public DbSet<JobApplication> JobApplications { get; set; } = null!;
+    public DbSet<Network> Networks { get; set; } = null!;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -41,5 +43,8 @@ public class CVDbContext : DbContext
         modelBuilder.ApplyConfiguration(new TaalConfiguration());
         modelBuilder.ApplyConfiguration(new WerkervaringConfiguration());
         modelBuilder.ApplyConfiguration(new TaakConfiguration());
+        modelBuilder.ApplyConfiguration(new JobApplicationConfiguration());
+        modelBuilder.ApplyConfiguration(new NetworkConfiguration());
     }
 }
+
