@@ -1,0 +1,55 @@
+﻿@page
+@model CurriculumVitae.Web.Pages.ProfilesModel
+@attribute [Authorize]
+@{
+}
+<h1>Profielen</h1>
+@if (Model.EnabledCount == 0)
+{
+    <div class="alert alert-info" role="alert">
+                <p>Geen ingeschakelde profielen gevonden.</p>
+    </div>
+}
+@if (Model.EnabledCount > 1)
+{
+    <div class="alert alert-danger" role="alert">
+        <p>Meerdere ingeschakelde profielen gevonden.</p>
+    </div>    
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Beschrijving</th>
+            <th scope="col">Enabled</th>
+            <th scope="col">Acties</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var profile in Model.Profiles)
+        {
+            <tr>
+                    <td>@profile.Id</td>
+                    <td>@profile.Beschrijving</td>
+                    <td>@profile.Enabled</td>
+                    <td class="d-grid">                    
+                        <form method="post">
+                            <input type="hidden" name="profiel.Id" value="@profile.Id" />
+                            <input type="hidden" name="profiel.Beschrijving" value="@profile.Beschrijving" />
+                            <input type="hidden" name="profiel.Enabled" value="@(profile.Enabled?"true":"false")" />
+                            <button type="submit" asp-page-handler="Edit" class="btn btn-primary">Bewerken</button>
+                            <button type="submit" asp-page-handler="Delete" class="btn btn-danger">Verwijderen</button>    
+                            @if (profile.Enabled == true)
+                            {
+                                <button type="submit" asp-page-handler="Disable" class="btn btn-info">Deactiveren</button>
+                            } else
+                            {
+                                <button type="submit" asp-page-handler="Enable" class="btn btn-info">Activeren</button>
+                            }
+                        </form>
+                </td>                
+            </tr>
+        }
+    </tbody>
+</table>

@@ -11,7 +11,7 @@ public class JobApplication
     [ForeignKey(nameof(ProfielId))]
     public required Profiel Profiel { get; set; }
     public string Function {  get; set; } = string.Empty;
-    public DateOnly ApplicationDate { get; set; }
+    public DateOnly ApplicationDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
     public string Description { get; set; } = string.Empty;
 }
  

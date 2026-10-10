@@ -37,8 +37,8 @@ else
                 {
                     <form method="post" asp-page-handler="Update">
                         <td><input type="text" name="Function" value="@item.Function" required /></td>
-                        <td><input type="date" name="ApplicationDate" value="@item.ApplicationDate" required /></td>
-                        <td><input type="text" name="Description" value="@item.Description" required /></td>
+                        <td><input type="date" name="ApplicationDate" value="@item.ApplicationDate.ToString("yyyy-MM-dd")" required /></td>
+                        <td><input type="text" name="Description" value="@item.Description" required style="width:800px;height:400px" /></td>
                         <td>                        
                                 <input type="hidden" name="Id" value="@item.Id" />
                                 <button type="submit" asp-page-handler="Update" class="btn btn-primary">Opslaan</button>                        
@@ -56,7 +56,7 @@ else
     } else {            
             <form method="post"  asp-page-handler="Add">
                 <input type="text" name="Function" placeholder="Functie" required />
-                <input type="date" name="ApplicationDate" required />
+                <input type="date" name="ApplicationDate" required value="@DateTime.Now.Date.ToString("yyyy-MM-dd")" />
                 <textarea name="Description" placeholder="Beschrijving"></textarea>
                 <button type="submit">Toevoegen</button>
             </form>            
