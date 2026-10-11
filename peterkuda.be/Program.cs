@@ -58,7 +58,8 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 /// add controllers including other projects
 builder.Services.AddControllers().AddApplicationPart(typeof(CurriculumVitae.API.Controllers.CurriculumVitaeController).Assembly);
-
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
@@ -70,9 +71,13 @@ if (!app.Environment.IsDevelopment())
     app.UseForwardedHeaders(); // for use behind a reverse proxy server
     app.UseHsts(); // Enforce SSL
 }
+else { 
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 //app.UseHttpsRedirection();
-app.UseStaticFiles();
+ app.UseStaticFiles();
 
 app.UseRouting();
 app.UseAuthentication();;
