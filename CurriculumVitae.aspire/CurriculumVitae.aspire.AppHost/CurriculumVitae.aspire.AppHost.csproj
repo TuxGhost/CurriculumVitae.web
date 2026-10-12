@@ -10,6 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.JavaScript" Version="13.6.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\CurriculumVitae.SwashBuckle\CurriculumVitae.SwashBuckle.csproj" />
     <ProjectReference Include="..\..\peterkuda.be\CurriculumVitae.Web.csproj" />
   </ItemGroup>
