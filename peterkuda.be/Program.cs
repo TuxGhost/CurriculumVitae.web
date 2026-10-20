@@ -26,6 +26,7 @@ builder.Services.AddScoped<ICurriculumVitaeService, CurriculumVitaeService>();
 builder.Services.AddScoped<IJobApplicationService, JobApplicationService>();
 builder.Services.AddScoped<INetworkService, NetworkService>();
 builder.Services.AddScoped<dbMaintenance>();
+builder.Services.AddScoped<IDbCurriculumVitaeService, DbCurriculumVitaeService>();
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.Configure<ForwardedHeadersOptions>(options =>

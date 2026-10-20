@@ -1,0 +1,232 @@
+﻿@page "{Id:int}"
+@using CurriculumVitaeRepository.Entities;
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@model CurriculumVitae.Web.Pages.ProfileModel
+
+@{
+    
+
+}
+@if (SignInManager.IsSignedIn(User))
+{
+    <input id="editable" value="false" type="hidden" asp-for="IsEditing"  />
+     <button id="edit" type="button" onclick="enableEdit()" class="btn btn-outline-primary display" disabled>Edit</button>
+}
+
+<form method="post">
+<h3>Profiel @Model.Id </h3>
+<section>
+    <fieldset>
+        <div class="display">        
+            <p>@Model.Profiel.Beschrijving</p>
+            <p>@Model.Profiel.Enabled</p>    
+        </div>
+        <div class="edit" hidden> 
+            <label for="profiel" asp-for="Profiel">Profiel tekst</label>            
+            <textarea id="profiel" asp-for="Profiel.Beschrijving"></textarea>            
+            <span asp-validation-for="Profiel" class="danger"></span>                
+        </div>
+    </fieldset>
+</section>
+<h3>Talen</h3>
+<section>    
+    <fieldset>
+        <div class="display">
+            @foreach(Taal taal in @Model.Talen.Where(d => d!= null && d.profiel!= null && d.profiel.Id == Model.Profiel?.Id))
+            {
+                <ul class="list-group list-group-horizontal d-flex">
+                    <li class="col-1">@taal.TaalOmschrijving</li>
+                    <li class="col-1">@taal.Niveau</li>                    
+                </ul>                                
+            }            
+        </div>
+        <div class="edit">            
+                <div id="languages">
+                    @foreach (Taal taal in @Model.Talen)
+                    {
+                        <ul class="list-group list-group-horizontal d-flex gap-5">
+                            <li class="form-field col-1">@taal.Id</li>
+                            <li class="form-field col-6">@taal.TaalOmschrijving</li>
+                            <li class="form-field col-6">@taal.Niveau</li>
+                        </ul>
+                    }
+                </div>
+                <select id="selectLanguage" asp-for="SelectLanguage" onchange="onLanguageSelectionChange(this)">
+                    <option value="" >--Select a language--</option>
+                    @foreach(Taal taal in @Model.Talen) 
+                    {
+                     <option value=@taal.TaalOmschrijving>
+                         <ul class="list-group list-group-horizonatal d-flex">
+                            <li>@taal.TaalOmschrijving</li>
+                            <li>@taal.Id</li>
+                        </ul>
+                    </option>   
+                    }
+                </select>
+                <div id="selectLanguageRegion" hidden>
+                    <select id="selectLanguageLevel" hidden>
+                        <option value="Basis">
+                            Basis
+                        </option>
+                        <option value="Goed">Goed</option>
+                        <option value="Zeer goed">Zeer goed</option>
+                        <option value="Moedertaal"></option>
+                    </select>
+                    <button type="button" onclick="languageAdd()">Toevoegen</button>
+                </div>
+               </div>
+    </fieldset>
+</section>
+<h3>Persooonlijke vaardigheden</h3>
+<section>
+    <fieldset>
+        <div class="display">
+            @foreach (Persoonlijkevaardigheid e in @Model.Persoonlijkevaardigheden.Where(d => d != null && d.Profiel != null && d.Profiel.Id == Model.Profiel.Id))
+            {
+                <ul>
+                    <li>@e.Name</li>                    
+                </ul>
+            }
+
+        </div>
+        <div class="edit" ">
+        </div>
+    </fieldset>
+</section>
+<h3>Computer vaardigheden</h3>
+<section>
+    <fieldset>
+        <div class="display">
+            @foreach (Computervaardigheid e in @Model.Computervaardigheden.Where(d => d != null && d.Profiel != null && d.Profiel.Id == Model.Profiel.Id))
+            {
+                <ul>
+                    <li>@e.Omschrijving</li>
+                </ul>
+            }
+
+        </div>
+        <div class="edit">
+        </div>
+    </fieldset>
+</section>
+<h3>Werkervaring</h3>
+<section>
+    <fieldset>
+        <div class="display">
+            @foreach (WerkErvaring e in @Model.Werkervaringen)
+            {
+                <ul>
+                    <li>@e.Bedrijf</li>
+                </ul>
+            }
+        </div>
+        <div class="edit">
+        </div>
+    </fieldset>
+</section>
+<button type="button" class="btn btn-outline-primary edit" onclick="Save()" >Opslaan</button>
+<button type="submit" class="btn btn-outline-primary edit" asp-page-handler="Cancel">Annuleren</button> 
+</form>"
+
+@Html.AntiForgeryToken()
+@section Scripts {
+    <script >                
+        let talen;
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll(".display").forEach(element => {element.hidden = false;});
+            document.querySelectorAll(".edit").forEach(element => {element.hidden = true;});
+            talen = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Talen));
+            listLanguages(talen);
+        });
+        
+        
+        const token = document.querySelector(
+                'input[name="__RequestVerificationToken"]'
+            ).value;
+        const enableEdit = async () => {            
+            const result = await fetch("?handler=Edit", {
+                method: "POST",
+                headers: {
+                    "RequestVerificationToken": token
+                }
+
+            });            
+            document.getElementById("editable").value= "true";
+            switchEditMode(true);
+        };
+        const Save = async () => {    
+            const payLoad = {
+                talen: talen
+            };
+            console.log(payLoad);
+
+            const result = await fetch("?handler=Save", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "RequestVerificationToken": token,                    
+                },
+                body: JSON.stringify(payLoad)
+            });   
+            console.log("test");
+            console.log("HTTP status:", result.status);
+            console.log("Response:", await result.text());
+        };
+        const Cancel = async () => {            
+            const result = await fetch("?handler=Cancel", {
+                method: "POST",
+                headers: {
+                    "RequestVerificationToken": token
+                }
+            });                        
+        };
+        const switchEditMode = async (editMode) => {
+            listLanguages(talen);
+            document.querySelectorAll(".display").forEach(element => {element.hidden = editMode;});
+            document.querySelectorAll(".edit").forEach(element => {element.hidden = !editMode;});
+        };
+        const onLanguageSelectionChange = (e) => {
+            const clanguages = document.getElementById("selectLanguage");
+            const clanguageSelection = document.getElementById("selectLanguageLevel");
+            if(clanguages.value == ""){
+                clanguageSelection.hidden=true;
+                document.getElementById("selectLanguageRegion").hidden=true;
+            } else{
+                clanguageSelection.hidden=false;
+                document.getElementById("selectLanguageRegion").hidden=false;
+            }
+        }
+        const languageAdd = (e) => {            
+            const clanguage = document.getElementById("selectLanguage");
+            const clanguageSelection = document.getElementById("selectLanguageLevel");
+            talen.push( {  
+                Id: 0,
+                Profiel: null,
+                TaalOmschrijving: clanguage.value,
+                Niveau: clanguageSelection.value,
+                
+            });            
+            listLanguages(talen);
+        }
+        const listLanguages = (elementen) => {
+            console.log("Build languages");
+            //console.log(elementen);
+            const list = document.getElementById("languages");
+            let tempHtmlList = "<ul>";
+            elementen.forEach(taal => {
+                tempHtmlList += "<li>"
+                tempHtmlList += `<div class="list-group list-group-horizontal d-flex gap-5">`                
+                tempHtmlList += `<span class="form-field col-6">${taal.TaalOmschrijving}</span>`;
+                tempHtmlList += `<span class="form-field col-6">${taal.Niveau}</span>`;
+                tempHtmlList += `<span class="form-field col-2"><img src="/Images/delete.png" class="form-field col-1" alt="Delete image" /></span>`
+                tempHtmlList += "</div>"
+                tempHtmlList += "</li>"
+            });
+            tempHtmlList +="</ul>";
+            list.innerHTML = tempHtmlList;
+        }
+    </script>
+}
+
+

@@ -30,7 +30,7 @@
         @foreach (var profile in Model.Profiles)
         {
             <tr>
-                    <td>@profile.Id</td>
+                    <td><a href="~/profile/@profile.Id">@profile.Id</a></td>
                     <td>@profile.Beschrijving</td>
                     <td>@profile.Enabled</td>
                     <td class="d-grid">                    

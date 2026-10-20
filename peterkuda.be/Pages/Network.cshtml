@@ -24,7 +24,7 @@ else
             {
                 <tr>
                     @if(Model.IdChange == item.Id)
-                    {
+                    {                        
                         <form method="post" asp-page-handler="Update">
                             <td><input type="text" name="Lastname" value="@item.Lastname" required /></td>
                             <td><input type="text" name="Function" value="@item.Function" required /></td>
@@ -34,17 +34,18 @@ else
                                 <input type="hidden" name="Id" value="@item.Id" />
                                 <button type="submit" asp-page-handler="Update" class="btn btn-primary">Opslaan</button>
                             </td>
-                        </form>
+                        </form>                        
                     } else {
                             <td>@item.Lastname</td>
                             <td>@item.Function</td>
                             <td>@item.Company</td>
                             <td>@item.NetworkType</td>
-                            <td>
+                            <td>                                
                                 <form method="post">
                                     <button type="submit" asp-page-handler="Edit" asp-route-id="@item.Id" class="btn btn-primary">Bewerken</button>
                                     <button type="submit" asp-page-handler="Delete" asp-route-id="@item.Id" class="btn btn-danger">Verwijderen</button>
                                 </form>
+                                
                             </td>
                         }
                 </tr>
