@@ -19,8 +19,8 @@
 <section>
     <fieldset>
         <div class="display">        
-            <p>@Model.Profiel.Beschrijving</p>
-            <p>@Model.Profiel.Enabled</p>    
+            <p>@Model.Profiel?.Beschrijving</p>
+            <p>@Model.Profiel?.Enabled</p>    
         </div>
         <div class="edit" hidden> 
             <label for="profiel" asp-for="Profiel">Profiel tekst</label>            
@@ -33,7 +33,7 @@
 <section>    
     <fieldset>
         <div class="display">
-            @foreach(Taal taal in @Model.Talen.Where(d => d!= null && d.profiel!= null && d.profiel.Id == Model.Profiel?.Id))
+            @foreach(Taal taal in @Model.Talen?.Where(d => d!= null && d.profiel!= null && d.profiel.Id == Model.Profiel?.Id)??new List<Taal>())
             {
                 <ul class="list-group list-group-horizontal d-flex">
                     <li class="col-1">@taal.TaalOmschrijving</li>
@@ -43,7 +43,7 @@
         </div>
         <div class="edit">            
                 <div id="languages">
-                    @foreach (Taal taal in @Model.Talen)
+                    @foreach (Taal taal in @Model.Talen??new List<Taal>())
                     {
                         <ul class="list-group list-group-horizontal d-flex gap-5">
                             <li class="form-field col-1">@taal.Id</li>
@@ -54,7 +54,7 @@
                 </div>
                 <select id="selectLanguage" asp-for="SelectLanguage" onchange="onLanguageSelectionChange(this)">
                     <option value="" >--Select a language--</option>
-                    @foreach(Taal taal in @Model.Talen) 
+                    @foreach(Taal taal in @Model.Talen??new List<Taal>()) 
                     {
                      <option value=@taal.TaalOmschrijving>
                          <ul class="list-group list-group-horizonatal d-flex">
@@ -82,7 +82,8 @@
 <section>
     <fieldset>
         <div class="display">
-            @foreach (Persoonlijkevaardigheid e in @Model.Persoonlijkevaardigheden.Where(d => d != null && d.Profiel != null && d.Profiel.Id == Model.Profiel.Id))
+            @foreach (Persoonlijkevaardigheid e in @Model.Persoonlijkevaardigheden?
+                .Where(d => d != null && d.Profiel != null && d.Profiel.Id == Model.Profiel?.Id)?? new List<Persoonlijkevaardigheid>())
             {
                 <ul>
                     <li>@e.Name</li>                    
@@ -90,7 +91,7 @@
             }
 
         </div>
-        <div class="edit" ">
+        <div class="edit">
         </div>
     </fieldset>
 </section>
@@ -98,7 +99,8 @@
 <section>
     <fieldset>
         <div class="display">
-            @foreach (Computervaardigheid e in @Model.Computervaardigheden.Where(d => d != null && d.Profiel != null && d.Profiel.Id == Model.Profiel.Id))
+            @foreach (Computervaardigheid e in @Model.Computervaardigheden?
+                .Where(d => d != null && d.Profiel != null && d.Profiel.Id == Model.Profiel?.Id)??new List<Computervaardigheid>())
             {
                 <ul>
                     <li>@e.Omschrijving</li>
@@ -113,13 +115,14 @@
 <h3>Werkervaring</h3>
 <section>
     <fieldset>
-        <div class="display">
-            @foreach (WerkErvaring e in @Model.Werkervaringen)
-            {
-                <ul>
-                    <li>@e.Bedrijf</li>
-                </ul>
-            }
+        <div class="display">            
+                @foreach (WerkErvaring e in @Model.Werkervaringen ?? new  List<WerkErvaring>())
+                {
+                    <ul>
+                        <li>@e.Bedrijf</li>
+                    </ul>
+                }
+            }            
         </div>
         <div class="edit">
         </div>

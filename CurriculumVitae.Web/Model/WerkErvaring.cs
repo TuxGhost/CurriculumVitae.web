@@ -3,8 +3,7 @@
 namespace CurriculumVitae.Model;
 
 public class WerkErvaring
-{   
-    private int _dagen;
+{       
     public int Id { get; set; }
     public string Functie { get; set; } = null!;
     public string Bedrijf { get; set; } = null!;

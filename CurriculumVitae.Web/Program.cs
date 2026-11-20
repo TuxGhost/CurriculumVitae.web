@@ -1,15 +1,12 @@
 using Microsoft.AspNetCore.HttpOverrides;
 using CurriculumVitae.Services;
 using System.Globalization;
-using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 using Microsoft.EntityFrameworkCore;
 using CurriculumVitae.Data;
 using Microsoft.AspNetCore.Identity;
-using System.Net.Mail;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using CurriculumVitae.common.Services;
 using CurriculumVitae.Web.Data;
-using CurriculumVitae.API.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>

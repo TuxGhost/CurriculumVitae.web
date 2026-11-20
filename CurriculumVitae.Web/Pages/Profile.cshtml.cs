@@ -69,11 +69,15 @@ public class ProfileModel : PageModel
         //var vaardigheden = data.Persoonlijkevaardigheden;
         if(SelectLanguage != string.Empty)
         {
-            Talen.Append(new Taal { 
-                profiel = this.Profiel,
-                TaalOmschrijving = SelectLanguage,                  
-                Niveau = "Beginner"
-            });
+            if(this.Profiel is not null)
+            {
+                Talen?.Append(new Taal
+                {
+                    profiel = this.Profiel,
+                    TaalOmschrijving = SelectLanguage,
+                    Niveau = "Beginner"
+                });
+            }            
         }
         if(commit == true)
         {

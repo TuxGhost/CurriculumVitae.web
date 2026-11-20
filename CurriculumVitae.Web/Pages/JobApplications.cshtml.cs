@@ -8,7 +8,7 @@ namespace CurriculumVitae.Web.Pages;
 //[Authorize]
 public partial class JobApplications : PageModel
 {
-    private readonly ICurriculumVitaeService curriculumVitaeService;
+    //private readonly ICurriculumVitaeService curriculumVitaeService;
     private readonly IJobApplicationService jobApplicationService;
     [BindProperty]
     public bool IsAddingMode { get; set; } 
@@ -40,7 +40,7 @@ public partial class JobApplications : PageModel
     }
     public async Task<IActionResult> OnPostAdd(JobApplicationDto jobApplication)
     {
-        jobApplicationService.Add(jobApplication);
+        await jobApplicationService.Add(jobApplication);
         return Page();
     }
     public async Task<IActionResult> OnPostDelete(uint id)

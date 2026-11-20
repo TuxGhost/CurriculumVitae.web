@@ -12,7 +12,7 @@ public class IndexModel : PageModel
 {
     private readonly ILogger<IndexModel> _logger;
     private readonly ICvService cvService;
-    private readonly ICurriculumVitaeServices curriculumVitaeServices;
+    //private readonly ICurriculumVitaeServices curriculumVitaeServices;
     
     [BindProperty()] 
     public CvModel cv { get; private set; } = null!;
