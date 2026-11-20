@@ -371,3 +371,9 @@ FodyWeavers.xsd
 *.db-shm
 *.db-wal
 *.db
+/CurriculumVitae.Web/src/js
+/CurriculumVitae.Web/wwwroot/css/site.css
+/CurriculumVitae.Web/wwwroot/dist
+/CurriculumVitae.Web/wwwroot/js/site.js
+/CurriculumVitae.Web/wwwroot/lib
+/CurriculumVitae.Web/appsettings.Development.json

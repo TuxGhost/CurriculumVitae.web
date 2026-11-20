@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>7ed0ebbe-2730-41e6-b3fb-f74cbf7fe8ab</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <VersionPrefix>3.1.0</VersionPrefix>
+    <VersionPrefix>3.2.0</VersionPrefix>
     <VersionSuffix></VersionSuffix>
   </PropertyGroup>
 
@@ -68,7 +68,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CurriculumVitae.API\CurriculumVitae.API.csproj" />
+    <ProjectReference Include="..\..\CurriculumVitae.API\CurriculumVitae.API.csproj" />
     <ProjectReference Include="..\CurriculumVitaeRepository\CurriculumVitaeRepository.csproj" />
   </ItemGroup>
 

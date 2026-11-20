@@ -14,8 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\CurriculumVitae.API\CurriculumVitae.API.csproj" />
     <ProjectReference Include="..\..\CurriculumVitae.SwashBuckle\CurriculumVitae.SwashBuckle.csproj" />
-    <ProjectReference Include="..\..\peterkuda.be\CurriculumVitae.Web.csproj" />
+    <ProjectReference Include="..\..\CurriculumVitae.Web\CurriculumVitae.Web.csproj" />
   </ItemGroup>
 
 </Project>

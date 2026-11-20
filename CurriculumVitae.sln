@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
 VisualStudioVersion = 18.1.11312.151
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurriculumVitae.Web", "peterkuda.be\CurriculumVitae.Web.csproj", "{15AF6C62-E43D-44D6-A7B8-69F152845879}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurriculumVitaeRepository", "CurriculumVitaeRepository\CurriculumVitaeRepository.csproj", "{2B9C0729-BFEB-46FC-9B7F-453C00A2F7F8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DF456509-8F11-4410-BFEE-D165F8999270}"
@@ -18,15 +16,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurriculumVitae.API.Test", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{DB38E6DF-EC10-4E9E-B554-8326C94775B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurriculumVitae.API", "CurriculumVitae.API\CurriculumVitae.API.csproj", "{49D45027-8331-9416-4285-781EDB8A6CD5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurriculumVitae.common", "CurriculumVitae.common\CurriculumVitae.common.csproj", "{507D869A-B339-126F-EF1E-B12978560C00}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurriculumVitae.aspire.AppHost", "CurriculumVitae.aspire\CurriculumVitae.aspire.AppHost\CurriculumVitae.aspire.AppHost.csproj", "{C2A2FC58-52DA-45FA-847D-0AB13CB7873B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurriculumVitae.aspire.ServiceDefaults", "CurriculumVitae.aspire\CurriculumVitae.aspire.ServiceDefaults\CurriculumVitae.aspire.ServiceDefaults.csproj", "{CDDDB327-A5EA-8828-14E8-8080E8627CBB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurriculumVitae.SwashBuckle", "CurriculumVitae.SwashBuckle\CurriculumVitae.SwashBuckle.csproj", "{F9C2DA94-1743-407E-A194-A96E743B3D74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurriculumVitae.API", "..\CurriculumVitae.API\CurriculumVitae.API.csproj", "{42E6BC1C-0E24-4AE0-AF2C-D7515B9698B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurriculumVitae.common", "..\CurriculumVitae.common\CurriculumVitae.common.csproj", "{1C800778-FD11-2B79-347C-B952550F3341}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurriculumVitae.Web", "CurriculumVitae.Web\CurriculumVitae.Web.csproj", "{370A648C-AD73-9177-E5E0-35C776D554C8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{1645A8B2-B073-4F7A-BD60-D15313E23752}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,10 +36,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{15AF6C62-E43D-44D6-A7B8-69F152845879}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{15AF6C62-E43D-44D6-A7B8-69F152845879}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{15AF6C62-E43D-44D6-A7B8-69F152845879}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{15AF6C62-E43D-44D6-A7B8-69F152845879}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2B9C0729-BFEB-46FC-9B7F-453C00A2F7F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2B9C0729-BFEB-46FC-9B7F-453C00A2F7F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B9C0729-BFEB-46FC-9B7F-453C00A2F7F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -46,14 +44,6 @@ Global
 		{BECF5159-B26F-40F9-B912-58857003F927}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BECF5159-B26F-40F9-B912-58857003F927}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BECF5159-B26F-40F9-B912-58857003F927}.Release|Any CPU.Build.0 = Release|Any CPU
-		{49D45027-8331-9416-4285-781EDB8A6CD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{49D45027-8331-9416-4285-781EDB8A6CD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{49D45027-8331-9416-4285-781EDB8A6CD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{49D45027-8331-9416-4285-781EDB8A6CD5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{507D869A-B339-126F-EF1E-B12978560C00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{507D869A-B339-126F-EF1E-B12978560C00}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{507D869A-B339-126F-EF1E-B12978560C00}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{507D869A-B339-126F-EF1E-B12978560C00}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C2A2FC58-52DA-45FA-847D-0AB13CB7873B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C2A2FC58-52DA-45FA-847D-0AB13CB7873B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2A2FC58-52DA-45FA-847D-0AB13CB7873B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -66,19 +56,31 @@ Global
 		{F9C2DA94-1743-407E-A194-A96E743B3D74}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9C2DA94-1743-407E-A194-A96E743B3D74}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9C2DA94-1743-407E-A194-A96E743B3D74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42E6BC1C-0E24-4AE0-AF2C-D7515B9698B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42E6BC1C-0E24-4AE0-AF2C-D7515B9698B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42E6BC1C-0E24-4AE0-AF2C-D7515B9698B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42E6BC1C-0E24-4AE0-AF2C-D7515B9698B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C800778-FD11-2B79-347C-B952550F3341}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C800778-FD11-2B79-347C-B952550F3341}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C800778-FD11-2B79-347C-B952550F3341}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C800778-FD11-2B79-347C-B952550F3341}.Release|Any CPU.Build.0 = Release|Any CPU
+		{370A648C-AD73-9177-E5E0-35C776D554C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{370A648C-AD73-9177-E5E0-35C776D554C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{370A648C-AD73-9177-E5E0-35C776D554C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{370A648C-AD73-9177-E5E0-35C776D554C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{15AF6C62-E43D-44D6-A7B8-69F152845879} = {9FAC075E-6FF6-4CF0-9744-DBE4BB77B388}
 		{2B9C0729-BFEB-46FC-9B7F-453C00A2F7F8} = {9FAC075E-6FF6-4CF0-9744-DBE4BB77B388}
 		{BECF5159-B26F-40F9-B912-58857003F927} = {DB38E6DF-EC10-4E9E-B554-8326C94775B4}
-		{49D45027-8331-9416-4285-781EDB8A6CD5} = {9FAC075E-6FF6-4CF0-9744-DBE4BB77B388}
-		{507D869A-B339-126F-EF1E-B12978560C00} = {9FAC075E-6FF6-4CF0-9744-DBE4BB77B388}
-		{C2A2FC58-52DA-45FA-847D-0AB13CB7873B} = {9FAC075E-6FF6-4CF0-9744-DBE4BB77B388}
+		{C2A2FC58-52DA-45FA-847D-0AB13CB7873B} = {1645A8B2-B073-4F7A-BD60-D15313E23752}
 		{CDDDB327-A5EA-8828-14E8-8080E8627CBB} = {9FAC075E-6FF6-4CF0-9744-DBE4BB77B388}
 		{F9C2DA94-1743-407E-A194-A96E743B3D74} = {9FAC075E-6FF6-4CF0-9744-DBE4BB77B388}
+		{42E6BC1C-0E24-4AE0-AF2C-D7515B9698B0} = {9FAC075E-6FF6-4CF0-9744-DBE4BB77B388}
+		{1C800778-FD11-2B79-347C-B952550F3341} = {9FAC075E-6FF6-4CF0-9744-DBE4BB77B388}
+		{370A648C-AD73-9177-E5E0-35C776D554C8} = {1645A8B2-B073-4F7A-BD60-D15313E23752}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {147211EE-D1D6-4959-B2F0-01EAD0DD02D5}
