@@ -33,8 +33,9 @@ public class ProfileModel : PageModel
 
     public class CvUpdateDto
     {
-        public List<Taal> talen { get; set; } = new();
-        public List<Persoonlijkevaardigheid> Persoonlijkevaardigheden { get; set; } = new();
+        public Profiel? Profiel { get; set; }
+        public List<Taal>? Talen { get; set; } = new();
+        public List<Persoonlijkevaardigheid>? Persoonlijkevaardigheden { get; set; } = new();
     }
     public ProfileModel(IDbCurriculumVitaeService service)
     {
@@ -60,25 +61,58 @@ public class ProfileModel : PageModel
         IsEditing = true;
         return Page();        
     }
-    public async Task<IActionResult> OnPostSave([FromBody] CvUpdateDto data, bool commit = false)
+    public async Task<IActionResult> OnPostSave([FromBody] CvUpdateDto body, bool commit = false)
     //public async Task<IActionResult> OnPostSave(bool commit = false)
     {
         //using var reader = new StreamReader(Request.Body);
         //var json = await reader.ReadToEndAsync();
         //var talen = data.talen;
         //var vaardigheden = data.Persoonlijkevaardigheden;
-        if(SelectLanguage != string.Empty)
+        /// TODO: Review Modelstate error Handling
+        /*if (!ModelState.IsValid)
         {
-            if(this.Profiel is not null)
+            var errors = ModelState
+            .Where(x => x.Value?.Errors.Count > 0)
+            .SelectMany(x => x.Value!.Errors.Select(e => new
             {
+                Field = x.Key,
+                Message = e.ErrorMessage
+            }));
+            return BadRequest(errors);
+        }*/
+        if(body == null)
+        {
+            return BadRequest();
+        }
+        if(body.Profiel != null)
+        {
+            //Profiel x = await _service.GetAsync(body.Profiel.Id) ?? null!;
+            //if(x== null)
+            //{
+                //await _service.AddProfileAsync(body.Profiel);
+            //} else
+            //{
+                await _service.UpdateProfileAsync(body.Profiel);
+            //}            
+        }
+        
+        
+        if (SelectLanguage != string.Empty)
+        {
+            if (this.Profiel is not null)
+            {
+                Profiel = this.Profiel;
                 Talen?.Append(new Taal
                 {
                     profiel = this.Profiel,
                     TaalOmschrijving = SelectLanguage,
                     Niveau = "Beginner"
                 });
-            }            
+                await _service.AddProfileAsync(Profiel);
+            }
         }
+        
+        
         if(commit == true)
         {
             

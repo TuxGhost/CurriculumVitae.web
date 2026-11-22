@@ -9,13 +9,15 @@ namespace CurriculumVitae.Web.Pages;
 public class ProfilesModel : PageModel
 {
     private readonly ICurriculumVitaeServices curriculumVitaeServices;
+    private readonly IDbCurriculumVitaeService dbService;
     [BindProperty]
     public List<ProfielDto> Profiles { get; private set; } = new List<ProfielDto>();
     [BindProperty]
     public int EnabledCount { get; private set; } = 0;
-    public ProfilesModel(ICurriculumVitaeServices curriculumVitaeServices)
+    public ProfilesModel(ICurriculumVitaeServices curriculumVitaeServices,IDbCurriculumVitaeService dbService)
     {
-        this.curriculumVitaeServices = curriculumVitaeServices;            
+        this.curriculumVitaeServices = curriculumVitaeServices;
+        this.dbService = dbService;
     }
     public async Task OnGet()
     {
@@ -33,6 +35,11 @@ public class ProfilesModel : PageModel
         };
         EnabledCount = Profiles.Where(p => p.Enabled == true).Count();
     }    
+    public async Task<IActionResult> OnPostAdd()
+    {
+        Profiel p = await dbService.AddProfileAsync(new Profiel { Beschrijving = "New profile"});       
+        return RedirectToPage("Profile", new { Id = p.Id });
+    }
     public async Task<IActionResult> OnPostEdit(Profiel profiel)
     {
         if(ModelState.IsValid == false)

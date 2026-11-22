@@ -50,6 +50,28 @@
                         </form>
                 </td>                
             </tr>
-        }
-    </tbody>
+        }        
+    </tbody>    
+    <tfoot>
+        
+    </tfoot>
 </table>
+<form method="post">
+    <button type="submit" id="btnNew" asp-page-handler="Add">Nieuw profiel</button>
+</form>
+
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            /*const btnNew = document.getElementById("btnNew");
+            if(btnNew) {
+                btnNew.addEventListener()
+            }*/
+        });
+
+        const newProfile = function () {
+            console.log("test");
+        }
+    </script>
+}

@@ -11,10 +11,10 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <input id="editable" value="false" type="hidden" asp-for="IsEditing"  />
-     <button id="edit" type="button" onclick="enableEdit()" class="btn btn-outline-primary display" disabled>Edit</button>
+     <button id="edit" type="button" onclick="enableEdit()" class="btn btn-outline-primary display" >Edit</button>
 }
 
-<form method="post">
+
 <h3>Profiel @Model.Id </h3>
 <section>
     <fieldset>
@@ -23,8 +23,10 @@
             <p>@Model.Profiel?.Enabled</p>    
         </div>
         <div class="edit" hidden> 
-            <label for="profiel" asp-for="Profiel">Profiel tekst</label>            
-            <textarea id="profiel" asp-for="Profiel.Beschrijving"></textarea>            
+            <label for="profiel" asp-for="Profiel">Profiel tekst</label>   
+            <input type="number" id="profileId" name="profileId" asp-for="Profiel.Id" hidden/>
+            <textarea id="profiel" name"profiel" asp-for="Profiel.Beschrijving"></textarea>   
+            <input type="checkbox" id="profileEnabled" name="profileEnabled" asp-for="Profiel.Enabled" hidden/>
             <span asp-validation-for="Profiel" class="danger"></span>                
         </div>
     </fieldset>
@@ -121,17 +123,21 @@
                     <ul>
                         <li>@e.Bedrijf</li>
                     </ul>
-                }
-            }            
+                }                        
         </div>
         <div class="edit">
         </div>
     </fieldset>
 </section>
 <button type="button" class="btn btn-outline-primary edit" onclick="Save()" >Opslaan</button>
+<form method="post">
 <button type="submit" class="btn btn-outline-primary edit" asp-page-handler="Cancel">Annuleren</button> 
-</form>"
-
+</form>
+<div id="validationErrors" class="alert alert-danger d-none">
+    <ul id="validationErrorList"></ul>
+    
+</div>
+<p>test</p>
 @Html.AntiForgeryToken()
 @section Scripts {
     <script >                
@@ -158,9 +164,21 @@
             document.getElementById("editable").value= "true";
             switchEditMode(true);
         };
-        const Save = async () => {    
-            const payLoad = {
-                talen: talen
+        const Save = async () => {
+            console.log("test");
+            const profielId = document.getElementById("profileId").value;
+            const profielEnabled = document.getElementById("profileEnabled").checked ?? false;
+            const profiel = document.getElementById("profiel").value;
+            if(profiel){
+                console.log("Profiel ingevuld");
+            }
+            const payLoad = {                
+                Profiel: { 
+                    Id: profielId,
+                    Beschrijving: profiel,
+                    Enabled: profielEnabled
+                },
+                Talen: talen                             
             };
             console.log(payLoad);
 
@@ -171,8 +189,7 @@
                     "RequestVerificationToken": token,                    
                 },
                 body: JSON.stringify(payLoad)
-            });   
-            console.log("test");
+            });               
             console.log("HTTP status:", result.status);
             console.log("Response:", await result.text());
         };
@@ -216,18 +233,22 @@
             console.log("Build languages");
             //console.log(elementen);
             const list = document.getElementById("languages");
-            let tempHtmlList = "<ul>";
-            elementen.forEach(taal => {
-                tempHtmlList += "<li>"
-                tempHtmlList += `<div class="list-group list-group-horizontal d-flex gap-5">`                
-                tempHtmlList += `<span class="form-field col-6">${taal.TaalOmschrijving}</span>`;
-                tempHtmlList += `<span class="form-field col-6">${taal.Niveau}</span>`;
-                tempHtmlList += `<span class="form-field col-2"><img src="/Images/delete.png" class="form-field col-1" alt="Delete image" /></span>`
-                tempHtmlList += "</div>"
-                tempHtmlList += "</li>"
-            });
-            tempHtmlList +="</ul>";
-            list.innerHTML = tempHtmlList;
+            if(list){
+                let tempHtmlList = "<ul>";
+                if(elementen){
+                    elementen.forEach(taal => {
+                        tempHtmlList += "<li>"
+                        tempHtmlList += `<div class="list-group list-group-horizontal d-flex gap-5">`
+                        tempHtmlList += `<span class="form-field col-6">${taal.TaalOmschrijving}</span>`;
+                        tempHtmlList += `<span class="form-field col-6">${taal.Niveau}</span>`;
+                        tempHtmlList += `<span class="form-field col-2"><img src="/Images/delete.png" class="form-field col-1" alt="Delete image" /></span>`
+                        tempHtmlList += "</div>"
+                        tempHtmlList += "</li>"
+                    });
+                    tempHtmlList += "</ul>";
+                    list.innerHTML = tempHtmlList;
+                }                
+            }            
         }
     </script>
 }

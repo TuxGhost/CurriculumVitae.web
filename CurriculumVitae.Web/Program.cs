@@ -9,6 +9,19 @@ using CurriculumVitae.common.Services;
 using CurriculumVitae.Web.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+// Extend appsetting configuration possibilities based on environment and framework version.
+builder.Configuration
+    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json",optional: true,reloadOnChange: true)
+#if NET8_0
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.net8.json", optional: true, reloadOnChange: true);
+#endif
+#if NET9_0
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.net9.json", optional: true, reloadOnChange: true);
+#endif
+#if NET10_0
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.net10.json", optional: true, reloadOnChange: true);
+#endif
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("Default")));
 builder.Services.AddDbContext<CurriculumVitaeDbContext>(options =>
