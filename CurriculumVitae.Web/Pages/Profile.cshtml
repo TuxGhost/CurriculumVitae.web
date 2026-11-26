@@ -20,13 +20,13 @@
     <fieldset>
         <div class="display">        
             <p>@Model.Profiel?.Beschrijving</p>
-            <p>@Model.Profiel?.Enabled</p>    
+            <p><label>Actief</label><span>@Model.Profiel?.Enabled</span></p>    
         </div>
         <div class="edit" hidden> 
             <label for="profiel" asp-for="Profiel">Profiel tekst</label>   
             <input type="number" id="profileId" name="profileId" asp-for="Profiel.Id" hidden/>
             <textarea id="profiel" name"profiel" asp-for="Profiel.Beschrijving"></textarea>   
-            <input type="checkbox" id="profileEnabled" name="profileEnabled" asp-for="Profiel.Enabled" hidden/>
+            <input type="checkbox" id="profileEnabled" name="profileEnabled" asp-for="Profiel.Enabled" />
             <span asp-validation-for="Profiel" class="danger"></span>                
         </div>
     </fieldset>
@@ -54,18 +54,21 @@
                         </ul>
                     }
                 </div>
-                <select id="selectLanguage" asp-for="SelectLanguage" onchange="onLanguageSelectionChange(this)">
+                <input type="text" list="options" id="newLanguage" onchange="addLanguage()" />
+                <!--select id="selectLanguage" asp-for="SelectLanguage" onchange="onLanguageSelectionChange(this)"-->
+                <datalist id="options">
                     <option value="" >--Select a language--</option>
-                    @foreach(Taal taal in @Model.Talen??new List<Taal>()) 
-                    {
-                     <option value=@taal.TaalOmschrijving>
-                         <ul class="list-group list-group-horizonatal d-flex">
-                            <li>@taal.TaalOmschrijving</li>
-                            <li>@taal.Id</li>
-                        </ul>
-                    </option>   
-                    }
-                </select>
+                    @if(@Model.TaalLijst!=null){
+                        @foreach (var taal in @Model.TaalLijst)
+                        {
+                            <option value=@taal>
+                                <ul class="list-group list-group-horizonatal d-flex">
+                                    <li>@taal</li>
+                                </ul>
+                            </option>
+                        }
+                    }                    
+                </datalist>
                 <div id="selectLanguageRegion" hidden>
                     <select id="selectLanguageLevel" hidden>
                         <option value="Basis">
@@ -94,6 +97,16 @@
 
         </div>
         <div class="edit">
+            <div id="personalskills">
+                @foreach(Persoonlijkevaardigheid e in Model.Persoonlijkevaardigheden?
+                    .Where(d => d != null && d.Profiel != null && d.Profiel.Id == Model.Profiel?.Id) ?? new List<Persoonlijkevaardigheid>())
+                {
+                    <ul>
+                        <li>@e.Name</li>
+                    </ul>
+                }                
+            </div>
+            <input id="newpersonalskill" type="text" onchange="onNewPersonalSkill(this)" /> 
         </div>
     </fieldset>
 </section>
@@ -108,9 +121,18 @@
                     <li>@e.Omschrijving</li>
                 </ul>
             }
-
         </div>
         <div class="edit">
+            <div id="computerskills">
+                @foreach (Computervaardigheid e in @Model.Computervaardigheden?
+                .Where(d => d != null && d.Profiel != null && d.Profiel.Id == Model.Profiel?.Id) ?? new List<Computervaardigheid>())
+                {
+                    <ul>
+                        <li>@e.Omschrijving</li>
+                    </ul>
+                }                
+            </div>
+            <input id="newcomputerskill" type="text" onchange="onNewComputerSkill(this)" />
         </div>
     </fieldset>
 </section>
@@ -126,6 +148,14 @@
                 }                        
         </div>
         <div class="edit">
+            <div id="workexperiences">
+                @foreach (WerkErvaring e in @Model.Werkervaringen ?? new List<WerkErvaring>())
+                {
+                    <ul>
+                        <li>@e.Bedrijf</li>
+                    </ul>
+                }
+            </div>
         </div>
     </fieldset>
 </section>
@@ -137,16 +167,31 @@
     <ul id="validationErrorList"></ul>
     
 </div>
-<p>test</p>
+
 @Html.AntiForgeryToken()
 @section Scripts {
     <script >                
-        let talen;
+        // Buffers for data
+        let talen = [];
+        let personalskills = [];
+        let computerskills = [];
+        let workexperiences= [];
+        // delete buffers
+        let talenDel = [];
+        let personalskillsDel = [];
+        let computerskillsDel = [];
+        let workexperiencesDel= [];
+        /// 
         document.addEventListener("DOMContentLoaded", () => {
             document.querySelectorAll(".display").forEach(element => {element.hidden = false;});
             document.querySelectorAll(".edit").forEach(element => {element.hidden = true;});
             talen = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Talen));
+            personalskills = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Persoonlijkevaardigheden));
+            computerskills = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Computervaardigheden));
+            workexperiences = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Werkervaringen));
             listLanguages(talen);
+            listPersonalSkills(personalskills);
+            listComputerSkills(computerskills);
         });
         
         
@@ -172,13 +217,20 @@
             if(profiel){
                 console.log("Profiel ingevuld");
             }
+            const ttalen = JSON.stringify(talen);
             const payLoad = {                
                 Profiel: { 
                     Id: profielId,
                     Beschrijving: profiel,
                     Enabled: profielEnabled
                 },
-                Talen: talen                             
+                Talen: talen,
+                Persoonlijkevaardigheden: personalskills,
+                Workexperiences: workexperiences,
+                TalenDel: talenDel,
+                PersonalSkillsDel: personalskillsDel,
+                ComputerSkillsDel: computerskillsDel,
+                WorkexperiencesDel: workexperiencesDel
             };
             console.log(payLoad);
 
@@ -230,25 +282,160 @@
             listLanguages(talen);
         }
         const listLanguages = (elementen) => {
-            console.log("Build languages");
-            //console.log(elementen);
+            console.log("Build languages");                        
             const list = document.getElementById("languages");
             if(list){
+
                 let tempHtmlList = "<ul>";
                 if(elementen){
                     elementen.forEach(taal => {
-                        tempHtmlList += "<li>"
+                        tempHtmlList += `<li id="${taal.Id}">` 
                         tempHtmlList += `<div class="list-group list-group-horizontal d-flex gap-5">`
                         tempHtmlList += `<span class="form-field col-6">${taal.TaalOmschrijving}</span>`;
-                        tempHtmlList += `<span class="form-field col-6">${taal.Niveau}</span>`;
-                        tempHtmlList += `<span class="form-field col-2"><img src="/Images/delete.png" class="form-field col-1" alt="Delete image" /></span>`
+                        tempHtmlList += `<span class="form-field col-6">`
+                        tempHtmlList += `<input type="text" name="level" index="${taal.Id}" language="${taal.TaalOmschrijving}" value="${taal.Niveau}" onchange="onLanguageChange(this)"/>`;
+                        tempHtmlList += `<span class="form-field col-2" index="${taal.Id}" language="${taal.TaalOmschrijving}" onclick="onLanguageDelete(this)"><img src="/Images/delete.png" class="form-field col-1" alt="Delete image" />`
+                        tempHtmlList += `</span>`
                         tempHtmlList += "</div>"
                         tempHtmlList += "</li>"
                     });
                     tempHtmlList += "</ul>";
                     list.innerHTML = tempHtmlList;
+                    /*var inputLanguages = document.querySelectorAll(`level`);
+                    inputLanguages.forEach(e => {
+                        console.log(e);
+                    });*/
                 }                
             }            
+        }
+        const addLanguage = () => {
+            const list = document.getElementById("newLanguage");
+            if(list){
+                /// TODO: Moet in de vorm van taal of vereenvoudige DTO (ik nu nu eerder vereenvoudigde omdat ook profiel er nog inzit)
+                //talen.push(list.value);
+                talen.push( {
+                    Id: 0,
+                        Profiel: null,
+                            TaalOmschrijving: list.value,
+                            Niveau: "Beginner",
+                    });
+                listLanguages(talen);
+            }
+        }
+        const onLanguageChange = (e) => {
+            if(e){
+                const id = e.getAttribute("index");
+                const language = e.getAttribute("language");
+                const value = e.value;
+                talen.forEach( l => {
+                    if (l.Id == id || l.TaalOmschrijving == language){
+                        console.log("gevonden");
+                        l.Niveau = value;
+                    }else{
+                        console.log("Niet gevonden");
+                    }
+                });
+            }                        
+        }
+        const onLanguageDelete = (e) => {
+            if(e){
+                console.log(e);
+                const id = e.getAttribute("index");
+                const language = e.getAttribute("language");
+                talen.forEach( l => {
+                    if(l.Id == id || l.TaalOmschrijving == language){
+                        talen = talen.filter( t => t.TaalOmschrijving != language);
+                        talenDel.push(id);
+                        listLanguages(talen);
+                    }
+                });
+            }
+        }
+        const listPersonalSkills = (elementen) => {            
+            const list = document.getElementById("personalskills");
+            if (list) {
+                let tempHtmlList = "<ul>";
+                if (elementen) {
+                    elementen.forEach(skill => {
+                        tempHtmlList += `<li id="${skill.Id}">`
+                        tempHtmlList += `<div class="list-group list-group-horizontal d-flex gap-5">`
+                        tempHtmlList += `<span class="form-field col-6">${skill.Name}</span>`;
+                        tempHtmlList += `<span class="form-field col-6">`
+                        
+                        tempHtmlList += `</span>`
+                        tempHtmlList += `<span class="form-field col-2" index="${skill.Id}" name2="${skill.Name}" onclick="onPersonalSkillDelete(this)"><img src="/Images/delete.png" class="form-field col-1" alt="Delete image" />`
+                        tempHtmlList += "</div>"
+                        tempHtmlList += "</li>"
+                    });
+                    tempHtmlList += "</ul>";
+                    list.innerHTML = tempHtmlList;                    
+                }
+            }
+        }
+        const onNewPersonalSkill = (e) => {
+            if(e){
+                const list = document.getElementById("newpersonalskill");
+                if(list){
+                /// TODO: Moet in de vorm van taal of vereenvoudige DTO (ik nu nu eerder vereenvoudigde omdat ook profiel er nog inzit)
+                //talen.push(list.value);
+                   personalskills.push( {
+                        Id: 0,
+                        Profiel: null,
+                        Name: list.value,
+                        Enabled: true
+                    });
+                    listPersonalSkills(personalskills);
+                }
+            }
+        }
+        const onPersonalSkillDelete = (e) => {                
+                const id = e.getAttribute("index");
+                const name = e.getAttribute("name2");
+                personalskills.forEach( l => {
+                    if(l.Id == id || l.Name == name){
+                        personalskills = personalskills.filter( t => t.Name != name);
+                        listPersonalSkills(personalskills);
+                    }
+                });
+                personalskillsDel.push(id);
+        }
+
+        const listComputerSkills = (elementen) => {            
+            const list = document.getElementById("computerskills");
+            if (list) {
+                let tempHtmlList = "<ul>";
+                if (elementen) {
+                    elementen.forEach(skill => {
+                        tempHtmlList += `<li id="${skill.Id}">`
+                        tempHtmlList += `<div class="list-group list-group-horizontal d-flex gap-5">`
+                        tempHtmlList += `<span class="form-field col-6">${skill.Omschrijving}</span>`;
+                        tempHtmlList += `<span class="form-field col-6">`
+                        
+                        tempHtmlList += `</span>`
+                        tempHtmlList += "</div>"
+                        tempHtmlList += "</li>"
+                    });
+                    tempHtmlList += "</ul>";
+                    list.innerHTML = tempHtmlList;                    
+                }
+            }
+        }
+        const onNewComputerSkill = (e) => {
+            if(e){
+                const list = document.getElementById("newcomputerskill");
+                if(list){
+                /// TODO: Moet in de vorm van taal of vereenvoudige DTO (ik nu nu eerder vereenvoudigde omdat ook profiel er nog inzit)
+                //talen.push(list.value);
+                   computerskills.push( {
+                        Id: 0,
+                        Profiel: null,
+                        Omschrijving: list.value,
+                        Niveau: "Beginner",
+                        Category:" "
+                    });
+                    listComputerSkills(computerskills);
+                }
+            }
         }
     </script>
 }

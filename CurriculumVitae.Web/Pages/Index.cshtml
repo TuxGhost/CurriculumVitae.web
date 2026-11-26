@@ -45,16 +45,17 @@
 
         </table>
 
+        
         <h1>Vaardigheden</h1>
         <ul>
-            @foreach (var vaardigheid in Model.cv.PersonalSkills)
+            @foreach (var vaardigheid in Model.cv.PersoonlijkeVaardigheden)
             {
-                @if (vaardigheid.Enabled == true)
-                {
+                /*@if (vaardigheid.Enabled == true)
+                {*/
                     <li class="skill">
-                        @vaardigheid.Name
+                        @vaardigheid
                     </li>
-                }
+                /*}*/
             }
         </ul>
         <h1>Computervaardigheden</h1>

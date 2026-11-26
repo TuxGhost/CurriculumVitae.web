@@ -378,3 +378,4 @@ FodyWeavers.xsd
 /CurriculumVitae.Web/wwwroot/lib
 /CurriculumVitae.Web/appsettings.Development.json
 /CurriculumVitae.Web/appsettings.Development.net8.json
+/CurriculumVitae.Web/appsettings.Development.net10.json
